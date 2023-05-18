@@ -1,0 +1,218 @@
+module state (input  logic Clk, Reset, ClearA_LoadB, Run,
+                output logic Shift_En, Ld_B, Reset_A, Add, Sub);
+
+    enum logic [4:0] {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T}   curr_state, next_state; 
+
+	//updates flip flop, current state is the only one
+    always_ff @ (posedge Clk)  
+    begin
+        if (Reset)
+            curr_state <= A;
+        else 
+            curr_state <= next_state;
+    end
+
+    // Assign outputs based on state
+	always_comb
+    begin
+        
+		  next_state  = curr_state;	//required because I haven't enumerated all possibilities below
+        unique case (curr_state) 
+
+            A :    if (Run)
+                       next_state = B;
+						 else if (ClearA_LoadB)
+							  next_state = T;
+            B :    next_state = C;
+            C :    next_state = D;
+            D :    next_state = E;
+            E :    next_state = F;
+				F :    next_state = G;
+            G :    next_state = H;
+            H :    next_state = I;
+            I :    next_state = J;
+				J :    next_state = K;
+				K :    next_state = L;
+				L :    next_state = M;
+				M :    next_state = N;
+				N :    next_state = O;
+				O :    next_state = P;
+				P :    next_state = Q;
+				Q :    next_state = R;
+				R :    next_state = S;
+            S :    if (~Run) 
+                       next_state = A;
+				T :	 next_state = A;
+							  
+        endcase
+   
+		  // Assign outputs based on ‘state’
+		  // For "Add" states, set Add logic as high.
+		  // For "Shift" states, set Shift_En logic as high.
+		  // For "Sub" states, set Sub logic as high.
+		  // For "ClearA_LoadB" states, set Reset_A and Ld_B logic as high.
+        case (curr_state) 
+	   	   A: 
+	         begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				B:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b1;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				C:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				D:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				E:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				F:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				G:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				H:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				I:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+	   	   J: 
+		      begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				K:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				L:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				M:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				N:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				O:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b1;
+					 Sub = 1'b0;
+		      end
+				P:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				Q:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b1;
+		      end
+				R:
+				begin
+					 Shift_En = 1'b1;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+				T:
+				begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b1;
+					 Reset_A = 1'b1;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+	   	   default:
+		      begin
+					 Shift_En = 1'b0;
+					 Ld_B = 1'b0;
+					 Reset_A = 1'b0;
+					 Add = 1'b0;
+					 Sub = 1'b0;
+		      end
+        endcase
+    end
+
+endmodule

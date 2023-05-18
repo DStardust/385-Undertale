@@ -1,0 +1,5 @@
+#include "text_mode_vga_color.h"
+
+void main() {
+	while(1==1)paletteTest();
+}

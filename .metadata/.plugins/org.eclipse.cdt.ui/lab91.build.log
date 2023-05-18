@@ -1,0 +1,9 @@
+17:14:58 **** Incremental Build of configuration Nios II for project lab91 ****
+make all 
+Info: Building ../lab91_bsp/
+F:/Quartus-lite-18.1.0.625-windows/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../lab91_bsp/
+[BSP build complete]
+[lab91 build complete]
+
+17:14:59 Build Finished (took 737ms)
+

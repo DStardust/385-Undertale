@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+newSoftwareExampleWizardPage.defaultLocation=F\:\\Quartus-lite-18.1.0.625-windows\\labs\\Final\\software\\usb
+newSoftwareExampleWizardPage.sopcinfoFile=F\:\\Quartus-lite-18.1.0.625-windows\\labs\\Final\\lab9_soc.sopcinfo
+newSoftwareExampleWizardPage2.newBspLocation=F\:\\Quartus-lite-18.1.0.625-windows\\labs\\Final\\software\\usb_bsp
