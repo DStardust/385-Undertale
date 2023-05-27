@@ -29,7 +29,8 @@
 			vga_port_pixel_clk     : out   std_logic;                                        -- pixel_clk
 			vga_port_sync          : out   std_logic;                                        -- sync
 			vga_port_status        : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- status
-			vga_port_keycode       : in    std_logic_vector(7 downto 0)  := (others => 'X')  -- keycode
+			vga_port_keycode       : in    std_logic_vector(7 downto 0)  := (others => 'X'); -- keycode
+			vga_port_arrived_door  : out   std_logic                                         -- arrived_door
 		);
 	end component lab9_soc;
 

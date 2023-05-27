@@ -1,0 +1,112 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 524288 bytes for offset table expansion
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (blockOffsetTable.cpp:83), pid=13792, tid=14440
+#
+# JRE version:  (8.0_05-b13) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.5-b02 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000000003398000):  JavaThread "Unknown thread" [_thread_in_vm, id=14440, stack(0x0000000003250000,0x0000000003350000)]
+
+Stack: [0x0000000003250000,0x0000000003350000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x308dea]
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0000000003398000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=14440, stack(0x0000000003250000,0x0000000003350000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff654f80000 - 0x00007ff654fb4000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\java.exe
+0x00007ffb564f0000 - 0x00007ffb56704000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffb542f0000 - 0x00007ffb543b2000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffb53910000 - 0x00007ffb53cb3000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffb563a0000 - 0x00007ffb5644e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffb56200000 - 0x00007ffb562a7000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffb562b0000 - 0x00007ffb56354000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffb54740000 - 0x00007ffb54857000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffb54420000 - 0x00007ffb545cb000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffb53cc0000 - 0x00007ffb53ce6000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffb54ad0000 - 0x00007ffb54af9000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffb53e50000 - 0x00007ffb53f68000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffb53cf0000 - 0x00007ffb53d8a000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffb54160000 - 0x00007ffb54271000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffb42f50000 - 0x00007ffb431de000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.1635_none_270f70857386168e\COMCTL32.dll
+0x00007ffb56360000 - 0x00007ffb56391000 	C:\WINDOWS\System32\IMM32.DLL
+0x000000006c450000 - 0x000000006c522000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\msvcr100.dll
+0x000000006bc20000 - 0x000000006c44a000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\server\jvm.dll
+0x00007ffb55130000 - 0x00007ffb55138000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffaf4290000 - 0x00007ffaf4299000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffb54860000 - 0x00007ffb548d1000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffb4e4b0000 - 0x00007ffb4e4e4000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x000000006dee0000 - 0x000000006deef000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\verify.dll
+0x000000006bbf0000 - 0x000000006bc18000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\java.dll
+0x000000006bbd0000 - 0x000000006bbe6000 	F:\quartus-lite-18.1.0.625-windows\quartus\bin64\jre64\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Xmx1500M -XX:+UseSerialGC 
+java_command: com.altera.sopcmodel.sbtools.sbgenerate.SbGenerate --output-directory=F:/Quartus-lite-18.1.0.625-windows/labs/Final/db/ip/sld6dfc5e3d/ --project-directory=F:/Quartus-lite-18.1.0.625-windows/labs/Final/ --file-set=QUARTUS_SYNTH --system-info=DEVICE_FAMILY=Cyclone IV E --report-file=xml:F:/Quartus-lite-18.1.0.625-windows/labs/Final/db/ip/sld6dfc5e3d/alt_sld_fab__report.xml --report-file=html:F:/Quartus-lite-18.1.0.625-windows/labs/Final/db/ip/sld6dfc5e3d/alt_sld_fab__report.html --component-name=alt_sld_fab --component-file=./db/ip/sld6dfc5e3d/alt_sld_fab_wrapper_hw.tcl --report-file=sopcinfo:F:/Quartus-lite-18.1.0.625-windows/labs/Final/db/ip/sld6dfc5e3d/alt_sld_fab.sopcinfo --report-file=qip:F:/Quartus-lite-18.1.0.625-windows/labs/Final/db/ip/sld6dfc5e3d/alt_sld_fab.qip --remove-qsys-generate-warning
+java_class_path (initial): F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\Nlview.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\QuickServer.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\TableLayout.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\appframework-1.03.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\asm-3.1.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\asm-commons-3.1.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\basicmodel.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\beansbinding-1.2.1.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\binding-2.0.6.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.componenteditor2.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.app_lib.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.editor.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.elements.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.plugin.core.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.plugin.hal.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.plugin.lwhal.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.schema.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.bsp.scripting.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embeddedsw.commandline.jar;F:/quartus-lite-18.1.0.625-windows/quartus/sopc_builder/model/lib\com.altera.embedded
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=F:/quartus-lite-18.1.0.625-windows/quartus/bin64;f:\quartus-lite-18.1.0.625-windows\quartus\bin64\;f:\quartus-lite-18.1.0.625-windows\quartus\bin64\;D:\VM\bin\;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\DStardust\AppData\Local\Microsoft\WindowsApps;D:\Minecraft\runtime\jre-x64\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;F:\MATLAB\bin;D:\Python\Python3.8\Scripts\;D:\Python\Python3.8\;C:\Users\DStardust\AppData\Local\Programs\Python\Launcher\;F:\Microsoft VS Code\bin;F:\mingw64\bin;E:\Nvidia\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;F:\Git\cmd;D:\Python\Python3.8\Scripts\;D:\Python\Python3.8\;C:\Users\DStardust\AppData\Local\Programs\Python\Launcher\;C:\Users\DStardust\AppData\Local\Microsoft\WindowsApps;F:\Microsoft VS Code\bin;F:\mingw64\bin;;F:\Quartus-lite-18.1.0.625-windows\modelsim_ase\win32aloem
+USERNAME=DStardust
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 96 Stepping 1, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8.1 , 64 bit Build 9600 
+
+CPU:total 16 (16 cores per cpu, 1 threads per core) family 23 model 96 stepping 1, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, mmxext, 3dnowpref, lzcnt, sse4a, tsc, tscinvbit
+
+Memory: 4k page, physical 16168452k(1300048k free), swap 20362756k(5192k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.5-b02) for windows-amd64 JRE (1.8.0_05-b13), built on Mar 18 2014 01:08:39 by "java_re" with MS VC++ 10.0 (VS2010)
+
+time: Fri May 19 19:53:30 2023
+elapsed time: 0 seconds
+

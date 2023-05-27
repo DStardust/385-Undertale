@@ -1,8 +1,9 @@
 module state (input  logic Clk, Reset, 
 				  input [7:0] keycode,
+				  input arrived_door,
                 output logic [3:0] status);
 
-    enum logic [4:0] {title, intro}   curr_state, next_state; 
+    enum logic [4:0] {title, intro, map1, map2}   curr_state, next_state; 
 
 	//updates flip flop, current state is the only one
     always_ff @ (posedge Clk)  
@@ -23,6 +24,10 @@ module state (input  logic Clk, Reset,
             title : if (keycode==8'h28)
 							next_state = intro;
             intro : if (keycode==8'h20)
+							next_state = map1;
+				map1 : if (keycode==8'h1d && arrived_door == 1'b1)
+							next_state = map2;
+				map2 : if (keycode==8'h20)
 							next_state = title;
 							  
         endcase
@@ -40,6 +45,14 @@ module state (input  logic Clk, Reset,
 				intro:
 				begin
 					 status = 4'd2;
+		      end
+				map1:
+				begin
+					 status = 4'd3;
+		      end
+				map2:
+				begin
+					 status = 4'd4;
 		      end
 	   	   default:
 		      begin

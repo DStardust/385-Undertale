@@ -2,18 +2,20 @@ module frisk_move
 (
 		input  Clk, frame_clk,
 		input Reset,
+		input [3:0] status,
 		input [7:0]	  keycode,
 		input  logic [9:0] DrawX, DrawY,				// Current pixel coordinates
 		output logic is_frisk,					// Whether current pixel belongs to background
-		output logic [19:0] frisk_address		// address for color mapper to figure out what color the logo pixel should be
+		output logic [19:0] frisk_address,		// address for color mapper to figure out what color the logo pixel should be
+		output logic arrived_door
 );
 
-	parameter [9:0] Frisk_X_Init = 10'd0;  // Center position on the X axis
-    parameter [9:0] Frisk_Y_Init = 10'd0;  // Center position on the Y axis
-    parameter [9:0] Frisk_X_Min = 10'd0;       // Leftmost point on the X axis
+	parameter [9:0] Frisk_X_Init = 10'd301;  // Center position on the X axis
+    parameter [9:0] Frisk_Y_Init = 10'd201;  // Center position on the Y axis
+    parameter [9:0] Frisk_X_Min = 10'd130;       // Leftmost point on the X axis
     parameter [9:0] Frisk_X_Max = 10'd602;     // Rightmost point on the X axis
-    parameter [9:0] Frisk_Y_Min = 10'd0;       // Topmost point on the Y axis
-    parameter [9:0] Frisk_Y_Max = 10'd422;     // Bottommost point on the Y axis
+    parameter [9:0] Frisk_Y_Min = 10'd130;       // Topmost point on the Y axis
+    parameter [9:0] Frisk_Y_Max = 10'd242;     // Bottommost point on the Y axis
     parameter [9:0] Frisk_X_Step = 10'd1;      // Step size on the X axis
     parameter [9:0] Frisk_Y_Step = 10'd1;      // Step size on the Y axis
 
@@ -156,17 +158,23 @@ module frisk_move
     assign DistX = DrawX - Frisk_X_Pos;
     assign DistY = DrawY - Frisk_Y_Pos;
     always_comb begin
-        if ( DistX >= 0 && DistX < 38 && DistY >= 0 && DistY < 58) begin
+        if ( DistX >= 0 && DistX < 38 && DistY >= 0 && DistY < 58 && status == 4'd3) begin
             is_frisk = 1'b1;
 				frisk_address = DrawX - Frisk_X_Pos + (DrawY - Frisk_Y_Pos) * 38;
-			end
+		  end
         else begin
             is_frisk = 1'b0;
 				frisk_address = 20'b0;
         /* The Frisk's (pixelated) circle is generated using the standard circle formula.  Note that while 
            the single line is quite powerful descriptively, it causes the synthesis tool to use up three
            of the 12 available multipliers on the chip! */
-			  end
+		  end
+		  if ( Frisk_X_Pos >= 520 && Frisk_X_Pos < 660 && Frisk_Y_Pos >= 130 && Frisk_Y_Pos < 140 && status == 4'd3) begin
+            arrived_door = 1'b1;
+		  end
+        else begin
+            arrived_door = 1'b0;
+		  end
     end
 endmodule
 

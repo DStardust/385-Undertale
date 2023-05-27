@@ -16,7 +16,7 @@
 
 module lab9( input               CLOCK_50,
              input        [3:0]  KEY,          //bit 0 is set up as Reset
-             output logic [6:0]  HEX0, HEX1,
+             output logic [6:0]  HEX0, HEX1,HEX2, HEX3,
              // VGA Interface 
              output logic [7:0]  VGA_R,        //VGA Red
                                  VGA_G,        //VGA Green
@@ -45,15 +45,37 @@ module lab9( input               CLOCK_50,
                                  DRAM_CKE,     //SDRAM Clock Enable
                                  DRAM_WE_N,    //SDRAM Write Enable
                                  DRAM_CS_N,    //SDRAM Chip Select
-                                 DRAM_CLK      //SDRAM Clock
+                                 DRAM_CLK,      //SDRAM Clock
+											
+				 input 					AUD_ADCDAT,
+             input 					AUD_DACLRCK,
+             input 					AUD_ADCLRCK,
+             input 					AUD_BCLK,
+             output logic        I2C_SCLK, 
+				 output logic			I2C_SDAT, 
+				 output logic			AUD_XCK, 
+				 output logic			AUD_DACDAT
+				 
+//				 inout  wire  [15:0] SRAM_DQ,       // external_interface.DQ
+//				 output logic [19:0] SRAM_ADDR,     //                   .ADDR
+//				 output logic        SRAM_LB_N,     //                   .LB_N
+//				 output logic        SRAM_UB_N,     //                   .UB_N
+//				 output logic        SRAM_CE_N,     //                   .CE_N
+//				 output logic        SRAM_OE_N,     //                   .OE_N
+//				 output logic        SRAM_WE_N     //                   .WE_N
 				);
     
     logic Reset_h, Clk;
+	 logic arrived_door;
 	 logic [3:0] status;
 	 logic [7:0] keycode;
 	 logic [1:0] hpi_addr;
     logic [15:0] hpi_data_in, hpi_data_out;
     logic hpi_r, hpi_w, hpi_cs, hpi_reset;
+	 
+	 logic INIT, data_over, INIT_FINISH, adc_full;
+	 logic [16:0] Add;
+	 logic [16:0] music_content;
     
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -94,7 +116,8 @@ module lab9( input               CLOCK_50,
 					.vga_port_blank (VGA_BLANK_N),
 					.vga_port_sync (VGA_SYNC_N),
 					.vga_port_status (status),
-					.vga_port_keycode(keycode)
+					.vga_port_keycode(keycode),
+					.vga_port_arrived_door(arrived_door)
     );
 	 
 	     // Interface between NIOS II and EZ-OTG chip
@@ -118,10 +141,31 @@ module lab9( input               CLOCK_50,
                             .OTG_RST_N(OTG_RST_N)
     );
 
+	 audio audio(.*, .Reset(Reset_h));
+	 music music(.*);
+	 audio_interface audio_interface(.LDATA(music_content), 
+											 .RDATA(music_content),
+											 .CLK(Clk),
+											 .Reset(Reset_h), 
+											 .INIT(INIT),
+											 .INIT_FINISH(INIT_FINISH),
+											 .adc_full(adc_full),
+											 .data_over(data_over),
+											 .AUD_MCLK(AUD_XCK),
+											 .AUD_BCLK(AUD_BCLK),     
+											 .AUD_ADCDAT(AUD_ADCDAT),
+											 .AUD_DACDAT(AUD_DACDAT),
+											 .AUD_DACLRCK(AUD_DACLRCK),
+											 .AUD_ADCLRCK(AUD_ADCLRCK),
+											 .I2C_SDAT(I2C_SDAT),
+											 .I2C_SCLK(I2C_SCLK),
+											 .ADCDATA(ADCDATA));
 	 
-	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status));
+	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status), .arrived_door(arrived_door));
 	 
-    HexDriver hex_inst_0 (keycode[3:0], HEX0);
-    HexDriver hex_inst_1 (keycode[7:4], HEX1);
+    HexDriver hex_inst_0 (music_content[3:0], HEX0);
+    HexDriver hex_inst_1 (music_content[7:4], HEX1);
+	 HexDriver hex_inst_2 (music_content[11:8], HEX2);
+    HexDriver hex_inst_3 (music_content[15:12], HEX3);
 	 
 endmodule

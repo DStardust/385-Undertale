@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "F:\\Quartus-lite-18.1.0.625-windows\\modelsim_ase\\gcc-4.2.1-mingw32vc12\\libexec\\gcc\\mingw32"
+        }
+    ],
+    "version": 4
+}

@@ -33,7 +33,8 @@ module lab9_soc (
 		output wire        vga_port_pixel_clk,     //                .pixel_clk
 		output wire        vga_port_sync,          //                .sync
 		input  wire [3:0]  vga_port_status,        //                .status
-		input  wire [7:0]  vga_port_keycode        //                .keycode
+		input  wire [7:0]  vga_port_keycode,       //                .keycode
+		output wire        vga_port_arrived_door   //                .arrived_door
 	);
 
 	wire         sdram_pll_c0_clk;                                                     // sdram_pll:c0 -> [mm_interconnect_0:sdram_pll_c0_clk, rst_controller_002:clk, sdram:clk]
@@ -163,7 +164,8 @@ module lab9_soc (
 		.pixel_clk     (vga_port_pixel_clk),                                                   //             .pixel_clk
 		.sync          (vga_port_sync),                                                        //             .sync
 		.status        (vga_port_status),                                                      //             .status
-		.keycode       (vga_port_keycode)                                                      //             .keycode
+		.keycode       (vga_port_keycode),                                                     //             .keycode
+		.arrived_door  (vga_port_arrived_door)                                                 //             .arrived_door
 	);
 
 	lab9_soc_jtag_uart_0 jtag_uart_0 (

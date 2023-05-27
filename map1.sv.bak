@@ -1,0 +1,25 @@
+module  map1_rom
+(
+		input [19:0] frisk1_address,
+		output logic [23:0] color_out
+);
+
+// mem has width of 3 bits and a total of 400 addresses
+logic [3:0] mem [0:4095];
+
+logic [23:0] col [7:0];
+assign col[0] = 24'h000000;
+assign col[1] = 24'h3d120e;
+assign col[2] = 24'h67a4e0;
+assign col[3] = 24'he607f8;
+assign col[4] = 24'hffc90e;
+assign col[5] = 24'hffffff;
+
+assign color_out = col[mem[frisk1_address]];
+
+initial
+begin
+	 $readmemh("sprite_bytes/Frisk1.txt", mem);
+end
+
+endmodule

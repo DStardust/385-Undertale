@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INPUT_FILE "sprite_bytes/background.txt"			// Input filename
-#define OUTPUT_FILE "backgroundSeperate.ram"		// Name of file to output to
+#define INPUT_FILE "8bit.txt"			// Input filename
+#define OUTPUT_FILE "8bit.ram"		// Name of file to output to
 #define NUM_COLORS 	4								// Total number of different colors
 #define WIDTH		8								
 #define DEPTH		3072
@@ -33,7 +33,7 @@ int main()
 	// Get a line, convert it to an integer, and compare it to the palette values.
 	while(fgets(line, num_chars, in) != NULL)
 	{
-		value = (char)strtol(line, NULL, 10);
+		value = (char)strtol(line, NULL, 16);
 		p = (int *)&value;
 		fwrite(p, 2, 1, out);
 	}

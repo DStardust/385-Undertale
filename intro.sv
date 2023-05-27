@@ -93,6 +93,14 @@ always_ff @(posedge frame_clk) begin
 				counter ++;
 				is_sub2 = 1'b1;
 			end
+			12'd3000:
+			begin
+				counter <= 12'd3000;
+				intro_num1 <= 4'd0;
+				intro_num2 <= 4'd0;
+				is_sub1 = 1'b0;
+				is_sub2 = 1'b0;
+			end
 			default:
 				counter ++;
 		endcase
@@ -491,7 +499,7 @@ module  font1_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font1_address];
 
@@ -509,7 +517,7 @@ module  font2_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font2_address];
 
@@ -527,7 +535,7 @@ module  font3_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font3_address];
 
@@ -545,7 +553,7 @@ module  font4_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font4_address];
 
@@ -563,7 +571,7 @@ module  font5_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font5_address];
 
@@ -581,7 +589,7 @@ module  font6_rom
 );
 
 // mem has width of 3 bits and a total of 400 addresses
-logic [5:0] mem [0:127];
+logic [7:0] mem [0:127];
 
 assign font_out = mem[font6_address];
 

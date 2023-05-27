@@ -49,6 +49,7 @@ module vga_text_avl_interface (
 	input  logic [3:0]  status,
 	input	 logic [7:0]  keycode,
 	output logic [7:0]  red, green, blue,	// VGA color channels (mapped to output pins in top-level)
+	output logic arrived_door,
 	output logic hs, vs,					// VGA HS/VS
 	output logic sync, blank, pixel_clk		// Required by DE2-115 video encoder
 );
@@ -60,7 +61,7 @@ logic [31:0] palette			[`PALETTE_REG];
 logic [31:0] vram_data;
 logic [31:0] vram_read_temp;
 
-logic [19:0] title_address, frisk_address, intro_address;
+logic [19:0] title_address, frisk_address, intro_address, map1_address, door_address;
 logic [6:0] font_address;
 logic [5:0] font_out1, font_out2, font_out3, font_out4, font_out5, font_out6;
 logic [3:0] intro_num1, intro_num2;
@@ -79,17 +80,22 @@ logic [6:0] font_num;
 logic [5:0] counter;
 
 logic [23:0] color_out_t;
+logic [23:0] color_out_m1;
+logic [23:0] color_out_d;
 logic [23:0] color_out_i1, color_out_i2, color_out_i3, color_out_i4, color_out_i5, color_out_i6, color_out_i7, color_out_i8, color_out_i9, color_out_i10;
 logic [23:0] color_out_f1, color_out_f2, color_out_f3, color_out_f4, color_out_f5, color_out_f6, color_out_f7, color_out_f8, color_out_f9, color_out_f10;
 
 logic [1:0] direction;
 
 logic is_title;
+logic is_map1;
 logic is_intro1, is_intro2, is_intro3, is_intro4, is_intro5, is_intro6, is_intro7, is_intro8, is_intro9, is_intro10;
 logic is_sub1, is_sub2;
 logic is_frisk;
 logic is_front;
 logic is_press;
+logic is_door;
+
 
 //Declare submodules..e.g. VGA controller, ROMS, etc
 vga_controller vga_controller_instance(.Clk(CLK), .Reset(RESET), .hs(hs), .vs(vs), .pixel_clk(pixel_clk), .blank(blank), .sync(sync), .DrawX(DrawX), .DrawY(DrawY));
@@ -106,7 +112,13 @@ font6_rom font6_rom(.font6_address(font_address), .font_out(font_out6));
 title title(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_title(is_title), .title_address(title_address));
 title_rom title_rom(.title_address(title_address), .color_out(color_out_t));
 
-frisk_move friskmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_frisk(is_frisk), .frisk_address(frisk_address));
+map1 map1(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_map1(is_map1), .map1_address(map1_address));
+map1_rom map1_rom(.map1_address(map1_address), .color_out(color_out_m1));
+
+door door(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_door(is_door), .door_address(door_address));
+door_rom door_rom(.door_address(door_address), .color_out(color_out_d));
+
+frisk_move friskmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_frisk(is_frisk), .status(status), .frisk_address(frisk_address), .arrived_door(arrived_door));
 frisk1_rom frisk1_rom(.frisk1_address(frisk_address), .color_out(color_out_f1));
 frisk2_rom frisk2_rom(.frisk2_address(frisk_address), .color_out(color_out_f2));
 frisk3_rom frisk3_rom(.frisk3_address(frisk_address), .color_out(color_out_f3));
@@ -248,71 +260,17 @@ begin
 					begin
 						if (color_out_f5 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -332,71 +290,17 @@ begin
 					begin
 						if (color_out_f1 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -416,71 +320,17 @@ begin
 					begin
 						if (color_out_f6 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -500,71 +350,17 @@ begin
 					begin
 						if (color_out_f1 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -585,71 +381,17 @@ begin
 				begin
 					if (color_out_f1 == 24'hffffff)
 					begin
-						if (is_title)
-						begin
-							red <= color_out_t[23:16];
-							green <= color_out_t[15:8];
-							blue <= color_out_t[7:0];
-						end
-						else if (is_intro1)
-						begin
-							red <= color_out_i1[23:16];
-							green <= color_out_i1[15:8];
-							blue <= color_out_i1[7:0];
-						end
-						else if (is_intro2)
-						begin
-							red <= color_out_i2[23:16];
-							green <= color_out_i2[15:8];
-							blue <= color_out_i2[7:0];
-						end
-						else if (is_intro3)
+						if (is_map1)
 							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro4)
+						else if (is_door)
 							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 						else
 						begin
@@ -674,71 +416,17 @@ begin
 					begin
 						if (color_out_f8 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -758,71 +446,17 @@ begin
 					begin
 						if (color_out_f2 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -842,71 +476,17 @@ begin
 					begin
 						if (color_out_f7 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -926,71 +506,17 @@ begin
 					begin
 						if (color_out_f2 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1011,71 +537,17 @@ begin
 				begin
 					if (color_out_f2 == 24'hffffff)
 					begin
-						if (is_title)
-						begin
-							red <= color_out_t[23:16];
-							green <= color_out_t[15:8];
-							blue <= color_out_t[7:0];
-						end
-						else if (is_intro1)
-						begin
-							red <= color_out_i1[23:16];
-							green <= color_out_i1[15:8];
-							blue <= color_out_i1[7:0];
-						end
-						else if (is_intro2)
-						begin
-							red <= color_out_i2[23:16];
-							green <= color_out_i2[15:8];
-							blue <= color_out_i2[7:0];
-						end
-						else if (is_intro3)
+						if (is_map1)
 							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro4)
+						else if (is_door)
 							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 						else
 						begin
@@ -1100,71 +572,17 @@ begin
 					begin
 						if (color_out_f9 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1184,71 +602,17 @@ begin
 					begin
 						if (color_out_f3 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1268,71 +632,17 @@ begin
 					begin
 						if (color_out_f9 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1352,71 +662,17 @@ begin
 					begin
 						if (color_out_f3 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1437,72 +693,18 @@ begin
 				begin
 					if (color_out_f3 == 24'hffffff)
 					begin
-						if (is_title)
+						if (is_map1)
 						begin
-							red <= color_out_t[23:16];
-							green <= color_out_t[15:8];
-							blue <= color_out_t[7:0];
+							red <= color_out_m1[23:16];
+							green <= color_out_m1[15:8];
+							blue <= color_out_m1[7:0];
 						end
-						else if (is_intro1)
+						else if (is_door)
 						begin
-							red <= color_out_i1[23:16];
-							green <= color_out_i1[15:8];
-							blue <= color_out_i1[7:0];
+							red <= color_out_d[23:16];
+							green <= color_out_d[15:8];
+							blue <= color_out_d[7:0];
 						end
-						else if (is_intro2)
-						begin
-							red <= color_out_i2[23:16];
-							green <= color_out_i2[15:8];
-							blue <= color_out_i2[7:0];
-						end
-						else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
-							end
 						else
 						begin
 							red <= 8'h0;
@@ -1526,71 +728,17 @@ begin
 					begin
 						if (color_out_f10 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1610,71 +758,17 @@ begin
 					begin
 						if (color_out_f4 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1694,71 +788,17 @@ begin
 					begin
 						if (color_out_f10 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1778,71 +818,17 @@ begin
 					begin
 						if (color_out_f4 == 24'hffffff)
 						begin
-							if (is_title)
+							if (is_map1)
 							begin
-								red <= color_out_t[23:16];
-								green <= color_out_t[15:8];
-								blue <= color_out_t[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro1)
+							else if (is_door)
 							begin
-								red <= color_out_i1[23:16];
-								green <= color_out_i1[15:8];
-								blue <= color_out_i1[7:0];
-							end
-							else if (is_intro2)
-							begin
-								red <= color_out_i2[23:16];
-								green <= color_out_i2[15:8];
-								blue <= color_out_i2[7:0];
-							end
-							else if (is_intro3)
-							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
-							end
-							else if (is_intro4)
-							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 							else
 							begin
@@ -1863,71 +849,17 @@ begin
 				begin
 					if (color_out_f4 == 24'hffffff)
 					begin
-						if (is_title)
-						begin
-							red <= color_out_t[23:16];
-							green <= color_out_t[15:8];
-							blue <= color_out_t[7:0];
-						end
-						else if (is_intro1)
-						begin
-							red <= color_out_i1[23:16];
-							green <= color_out_i1[15:8];
-							blue <= color_out_i1[7:0];
-						end
-						else if (is_intro2)
-						begin
-							red <= color_out_i2[23:16];
-							green <= color_out_i2[15:8];
-							blue <= color_out_i2[7:0];
-						end
-						else if (is_intro3)
+						if (is_map1)
 							begin
-								red <= color_out_i3[23:16];
-								green <= color_out_i3[15:8];
-								blue <= color_out_i3[7:0];
+								red <= color_out_m1[23:16];
+								green <= color_out_m1[15:8];
+								blue <= color_out_m1[7:0];
 							end
-							else if (is_intro4)
+						else if (is_door)
 							begin
-								red <= color_out_i4[23:16];
-								green <= color_out_i4[15:8];
-								blue <= color_out_i4[7:0];
-							end
-							else if (is_intro5)
-							begin
-								red <= color_out_i5[23:16];
-								green <= color_out_i5[15:8];
-								blue <= color_out_i5[7:0];
-							end
-							else if (is_intro6)
-							begin
-								red <= color_out_i6[23:16];
-								green <= color_out_i6[15:8];
-								blue <= color_out_i6[7:0];
-							end
-							else if (is_intro7)
-							begin
-								red <= color_out_i7[23:16];
-								green <= color_out_i7[15:8];
-								blue <= color_out_i7[7:0];
-							end
-							else if (is_intro8)
-							begin
-								red <= color_out_i8[23:16];
-								green <= color_out_i8[15:8];
-								blue <= color_out_i8[7:0];
-							end
-							else if (is_intro9)
-							begin
-								red <= color_out_i9[23:16];
-								green <= color_out_i9[15:8];
-								blue <= color_out_i9[7:0];
-							end
-							else if (is_intro10)
-							begin
-								red <= color_out_i10[23:16];
-								green <= color_out_i10[15:8];
-								blue <= color_out_i10[7:0];
+								red <= color_out_d[23:16];
+								green <= color_out_d[15:8];
+								blue <= color_out_d[7:0];
 							end
 						else
 						begin
@@ -2018,6 +950,18 @@ begin
 			red <= 8'hff;
 			green <= 8'hff;
 			blue <= 8'hff;
+		end
+		else if (is_map1)
+		begin
+			red <= color_out_m1[23:16];
+			green <= color_out_m1[15:8];
+			blue <= color_out_m1[7:0];
+		end
+		else if (is_door)
+		begin
+			red <= color_out_d[23:16];
+			green <= color_out_d[15:8];
+			blue <= color_out_d[7:0];
 		end
 		else
 		begin
