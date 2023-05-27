@@ -1,10 +1,11 @@
 
 State Machine - |lab9|state:states|curr_state
-Name curr_state.map2 curr_state.map1 curr_state.intro curr_state.title 
-curr_state.title 0 0 0 0 
-curr_state.intro 0 0 1 1 
-curr_state.map1 0 1 0 1 
-curr_state.map2 1 0 0 1 
+Name curr_state.map2 curr_state.map1 curr_state.intro curr_state.title curr_state.battle 
+curr_state.title 0 0 0 0 0 
+curr_state.intro 0 0 1 1 0 
+curr_state.map1 0 1 0 1 0 
+curr_state.map2 1 0 0 1 0 
+curr_state.battle 0 0 0 1 1 
 
 State Machine - |lab9|audio_interface:audio_interface|state
 Name state.b_end state.b_stop1 state.b_stop0 state.d_ack state.d7 state.d6 state.d5 state.d4 state.d3 state.d2 state.d1 state.d0 state.a_ack state.a7 state.a6 state.a5 state.a4 state.a3 state.a2 state.a1 state.a0 state.b_ack state.b7 state.b6 state.b5 state.b4 state.b3 state.b2 state.b1 state.b0 state.start state.initialize 
@@ -91,3 +92,10 @@ direction.00 0 0 0 0
 direction.01 0 0 1 1 
 direction.10 0 1 0 1 
 direction.11 1 0 0 1 
+
+State Machine - |lab9|lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|flower:flower|flower_num
+Name flower_num.011 flower_num.010 flower_num.001 flower_num.000 
+flower_num.000 0 0 0 0 
+flower_num.001 0 0 1 1 
+flower_num.010 0 1 0 1 
+flower_num.011 1 0 0 1 

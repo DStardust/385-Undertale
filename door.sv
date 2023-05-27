@@ -39,7 +39,7 @@ module door
 
 	always_ff @ (posedge Clk)
     begin
-        if (Reset)
+        if (status != 4'd3)
         begin
             door_X_Pos <= door_X_Init;
             door_X_Motion <= 10'd0;

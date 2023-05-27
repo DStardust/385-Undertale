@@ -4,37 +4,38 @@
 
 `timescale 1 ps / 1 ps
 module lab9_soc (
-		input  wire        clk_clk,                //             clk.clk
-		output wire [7:0]  keycode_export,         //         keycode.export
-		output wire [1:0]  otg_hpi_address_export, // otg_hpi_address.export
-		output wire        otg_hpi_cs_export,      //      otg_hpi_cs.export
-		input  wire [15:0] otg_hpi_data_in_port,   //    otg_hpi_data.in_port
-		output wire [15:0] otg_hpi_data_out_port,  //                .out_port
-		output wire        otg_hpi_r_export,       //       otg_hpi_r.export
-		output wire        otg_hpi_reset_export,   //   otg_hpi_reset.export
-		output wire        otg_hpi_w_export,       //       otg_hpi_w.export
-		input  wire        reset_reset_n,          //           reset.reset_n
-		output wire        sdram_clk_clk,          //       sdram_clk.clk
-		output wire [12:0] sdram_wire_addr,        //      sdram_wire.addr
-		output wire [1:0]  sdram_wire_ba,          //                .ba
-		output wire        sdram_wire_cas_n,       //                .cas_n
-		output wire        sdram_wire_cke,         //                .cke
-		output wire        sdram_wire_cs_n,        //                .cs_n
-		inout  wire [31:0] sdram_wire_dq,          //                .dq
-		output wire [3:0]  sdram_wire_dqm,         //                .dqm
-		output wire        sdram_wire_ras_n,       //                .ras_n
-		output wire        sdram_wire_we_n,        //                .we_n
-		output wire [7:0]  vga_port_red,           //        vga_port.red
-		output wire [7:0]  vga_port_green,         //                .green
-		output wire [7:0]  vga_port_blue,          //                .blue
-		output wire        vga_port_hs,            //                .hs
-		output wire        vga_port_vs,            //                .vs
-		output wire        vga_port_blank,         //                .blank
-		output wire        vga_port_pixel_clk,     //                .pixel_clk
-		output wire        vga_port_sync,          //                .sync
-		input  wire [3:0]  vga_port_status,        //                .status
-		input  wire [7:0]  vga_port_keycode,       //                .keycode
-		output wire        vga_port_arrived_door   //                .arrived_door
+		input  wire        clk_clk,                  //             clk.clk
+		output wire [7:0]  keycode_export,           //         keycode.export
+		output wire [1:0]  otg_hpi_address_export,   // otg_hpi_address.export
+		output wire        otg_hpi_cs_export,        //      otg_hpi_cs.export
+		input  wire [15:0] otg_hpi_data_in_port,     //    otg_hpi_data.in_port
+		output wire [15:0] otg_hpi_data_out_port,    //                .out_port
+		output wire        otg_hpi_r_export,         //       otg_hpi_r.export
+		output wire        otg_hpi_reset_export,     //   otg_hpi_reset.export
+		output wire        otg_hpi_w_export,         //       otg_hpi_w.export
+		input  wire        reset_reset_n,            //           reset.reset_n
+		output wire        sdram_clk_clk,            //       sdram_clk.clk
+		output wire [12:0] sdram_wire_addr,          //      sdram_wire.addr
+		output wire [1:0]  sdram_wire_ba,            //                .ba
+		output wire        sdram_wire_cas_n,         //                .cas_n
+		output wire        sdram_wire_cke,           //                .cke
+		output wire        sdram_wire_cs_n,          //                .cs_n
+		inout  wire [31:0] sdram_wire_dq,            //                .dq
+		output wire [3:0]  sdram_wire_dqm,           //                .dqm
+		output wire        sdram_wire_ras_n,         //                .ras_n
+		output wire        sdram_wire_we_n,          //                .we_n
+		output wire [7:0]  vga_port_red,             //        vga_port.red
+		output wire [7:0]  vga_port_green,           //                .green
+		output wire [7:0]  vga_port_blue,            //                .blue
+		output wire        vga_port_hs,              //                .hs
+		output wire        vga_port_vs,              //                .vs
+		output wire        vga_port_blank,           //                .blank
+		output wire        vga_port_pixel_clk,       //                .pixel_clk
+		output wire        vga_port_sync,            //                .sync
+		input  wire [3:0]  vga_port_status,          //                .status
+		input  wire [7:0]  vga_port_keycode,         //                .keycode
+		output wire        vga_port_arrived_door,    //                .arrived_door
+		output wire        vga_port_arrived_monster  //                .arrived_monster
 	);
 
 	wire         sdram_pll_c0_clk;                                                     // sdram_pll:c0 -> [mm_interconnect_0:sdram_pll_c0_clk, rst_controller_002:clk, sdram:clk]
@@ -146,26 +147,27 @@ module lab9_soc (
 	wire         rst_controller_002_reset_out_reset;                                   // rst_controller_002:reset_out -> [mm_interconnect_0:sdram_reset_reset_bridge_in_reset_reset, sdram:reset_n]
 
 	vga_text_avl_interface vga_text_mode_controller_0 (
-		.CLK           (clk_clk),                                                              //          CLK.clk
-		.RESET         (rst_controller_reset_out_reset),                                       //        RESET.reset
-		.AVL_ADDR      (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_address),    // avl_mm_slave.address
-		.AVL_BYTE_EN   (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_byteenable), //             .byteenable
-		.AVL_READ      (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_read),       //             .read
-		.AVL_WRITE     (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_write),      //             .write
-		.AVL_CS        (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_chipselect), //             .chipselect
-		.AVL_WRITEDATA (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_writedata),  //             .writedata
-		.AVL_READDATA  (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_readdata),   //             .readdata
-		.red           (vga_port_red),                                                         //     VGA_port.red
-		.green         (vga_port_green),                                                       //             .green
-		.blue          (vga_port_blue),                                                        //             .blue
-		.hs            (vga_port_hs),                                                          //             .hs
-		.vs            (vga_port_vs),                                                          //             .vs
-		.blank         (vga_port_blank),                                                       //             .blank
-		.pixel_clk     (vga_port_pixel_clk),                                                   //             .pixel_clk
-		.sync          (vga_port_sync),                                                        //             .sync
-		.status        (vga_port_status),                                                      //             .status
-		.keycode       (vga_port_keycode),                                                     //             .keycode
-		.arrived_door  (vga_port_arrived_door)                                                 //             .arrived_door
+		.CLK             (clk_clk),                                                              //          CLK.clk
+		.RESET           (rst_controller_reset_out_reset),                                       //        RESET.reset
+		.AVL_ADDR        (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_address),    // avl_mm_slave.address
+		.AVL_BYTE_EN     (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_byteenable), //             .byteenable
+		.AVL_READ        (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_read),       //             .read
+		.AVL_WRITE       (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_write),      //             .write
+		.AVL_CS          (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_chipselect), //             .chipselect
+		.AVL_WRITEDATA   (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_writedata),  //             .writedata
+		.AVL_READDATA    (mm_interconnect_0_vga_text_mode_controller_0_avl_mm_slave_readdata),   //             .readdata
+		.red             (vga_port_red),                                                         //     VGA_port.red
+		.green           (vga_port_green),                                                       //             .green
+		.blue            (vga_port_blue),                                                        //             .blue
+		.hs              (vga_port_hs),                                                          //             .hs
+		.vs              (vga_port_vs),                                                          //             .vs
+		.blank           (vga_port_blank),                                                       //             .blank
+		.pixel_clk       (vga_port_pixel_clk),                                                   //             .pixel_clk
+		.sync            (vga_port_sync),                                                        //             .sync
+		.status          (vga_port_status),                                                      //             .status
+		.keycode         (vga_port_keycode),                                                     //             .keycode
+		.arrived_door    (vga_port_arrived_door),                                                //             .arrived_door
+		.arrived_monster (vga_port_arrived_monster)                                              //             .arrived_monster
 	);
 
 	lab9_soc_jtag_uart_0 jtag_uart_0 (

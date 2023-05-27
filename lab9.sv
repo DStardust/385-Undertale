@@ -67,6 +67,7 @@ module lab9( input               CLOCK_50,
     
     logic Reset_h, Clk;
 	 logic arrived_door;
+	 logic arrived_monster;
 	 logic [3:0] status;
 	 logic [7:0] keycode;
 	 logic [1:0] hpi_addr;
@@ -75,7 +76,7 @@ module lab9( input               CLOCK_50,
 	 
 	 logic INIT, data_over, INIT_FINISH, adc_full;
 	 logic [16:0] Add;
-	 logic [16:0] music_content;
+	 logic [16:0] music_content, music_content1, music_content2, music_content3;
     
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -117,7 +118,8 @@ module lab9( input               CLOCK_50,
 					.vga_port_sync (VGA_SYNC_N),
 					.vga_port_status (status),
 					.vga_port_keycode(keycode),
-					.vga_port_arrived_door(arrived_door)
+					.vga_port_arrived_door(arrived_door),
+					.vga_port_arrived_monster(arrived_monster)
     );
 	 
 	     // Interface between NIOS II and EZ-OTG chip
@@ -142,7 +144,36 @@ module lab9( input               CLOCK_50,
     );
 
 	 audio audio(.*, .Reset(Reset_h));
-	 music music(.*);
+	 music1 music1(.*, .music_content(music_content1));
+	 music2 music2(.*, .music_content(music_content2));
+	 music3 music3(.*, .music_content(music_content3));
+	 
+	 always_comb
+	 begin
+			case (status)
+			4'd1:
+			begin
+				music_content = music_content1;
+			end
+			4'd2:
+			begin
+				music_content = music_content1;
+			end
+			4'd3:
+			begin
+				music_content = music_content3;
+			end
+			4'd4:
+			begin
+				music_content = music_content2;
+			end
+			4'd5:
+			begin
+				music_content = music_content2;
+			end
+			default: music_content <= 17'b0;
+			endcase
+	 end
 	 audio_interface audio_interface(.LDATA(music_content), 
 											 .RDATA(music_content),
 											 .CLK(Clk),
@@ -161,7 +192,7 @@ module lab9( input               CLOCK_50,
 											 .I2C_SCLK(I2C_SCLK),
 											 .ADCDATA(ADCDATA));
 	 
-	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status), .arrived_door(arrived_door));
+	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status), .arrived_door(arrived_door), .arrived_monster(arrived_monster));
 	 
     HexDriver hex_inst_0 (music_content[3:0], HEX0);
     HexDriver hex_inst_1 (music_content[7:4], HEX1);

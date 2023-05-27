@@ -70,9 +70,9 @@ always_comb
 				else
 					inner_counter = 16'd0;
 					
-				if (counter==16'd125  && Add<=17'd43113 && data_over!=0)//music frequency, to be polished
+				if (counter==16'd125  && Add<=17'd46094 && data_over!=0)//music frequency, to be polished
 					inner_Add = Add+17'd1;
-				else if (Add < 17'd43113)
+				else if (Add < 17'd46094)
 					inner_Add = Add;
 				else
 					inner_Add = 17'd0;

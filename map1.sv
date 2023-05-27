@@ -39,7 +39,7 @@ module map1
 
 	always_ff @ (posedge Clk)
     begin
-        if (Reset)
+        if (status != 4'd3)
         begin
             map1_X_Pos <= map1_X_Init;
             map1_X_Motion <= 10'd0;

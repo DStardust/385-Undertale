@@ -1152,6 +1152,8 @@ set_global_assignment -name SMART_RECOMPILE ON
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name SYSTEMVERILOG_FILE flower.sv
+set_global_assignment -name SYSTEMVERILOG_FILE map2.sv
 set_global_assignment -name SYSTEMVERILOG_FILE map1.sv
 set_global_assignment -name VHDL_FILE audio_interface.vhd
 set_global_assignment -name SYSTEMVERILOG_FILE hpi_io_intf.sv
@@ -1169,4 +1171,6 @@ set_global_assignment -name SYSTEMVERILOG_FILE intro.sv
 set_global_assignment -name SYSTEMVERILOG_FILE door.sv
 set_global_assignment -name SYSTEMVERILOG_FILE music.sv
 set_global_assignment -name SYSTEMVERILOG_FILE audio.sv
+set_global_assignment -name SYSTEMVERILOG_FILE heart.sv
+set_global_assignment -name SYSTEMVERILOG_FILE field.sv
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

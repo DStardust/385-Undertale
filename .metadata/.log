@@ -7656,3 +7656,334 @@ org.eclipse.core.runtime.CoreException: Error
 
 !ENTRY com.altera.sbtgui.launch 1 0 2023-05-23 17:58:16.445
 !MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1684832313 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+!SESSION 2023-05-27 19:40:33.671 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization F:/quartus-lite-18.1.0.625-windows/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization F:/quartus-lite-18.1.0.625-windows/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.core.resources 2 10035 2023-05-27 19:40:39.765
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2023-05-27 19:40:56.660
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 19:41:15.445
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 19:41:15.446
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 19:41:15.469
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 19:41:15.469
+!MESSAGE Error
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:41:25.325
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685185490]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:41:27.435
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685185490 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 19:56:16.691
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 19:56:16.691
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 19:56:16.701
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 19:56:16.701
+!MESSAGE Error
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:56:20.794
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188064]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:56:22.898
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188064 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:56:58.471
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188064]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 19:57:00.568
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188064 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 20:13:04.546
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 20:13:04.546
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 20:13:04.575
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 20:13:04.575
+!MESSAGE Error
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:13:09.194
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:13:11.538
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 20:21:42.477
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 20:21:42.478
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 20:21:42.487
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 20:21:42.487
+!MESSAGE Error
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:21:49.256
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:21:51.347
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:36:03.622
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 20:36:05.754
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 21:07:50.858
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 21:07:50.859
+!MESSAGE Error
+
+!ENTRY org.eclipse.cdt.core 4 0 2023-05-27 21:07:50.864
+!MESSAGE Error: Error
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error
+	at org.eclipse.cdt.internal.core.pdom.db.Database.databaseCorruptionDetected(Database.java:292)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.getChunk(Database.java:274)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.malloc(Database.java:324)
+	at org.eclipse.cdt.internal.core.pdom.db.ShortString.<init>(ShortString.java:43)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:566)
+	at org.eclipse.cdt.internal.core.pdom.db.Database.newString(Database.java:550)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties$DBProperty.<init>(DBProperties.java:186)
+	at org.eclipse.cdt.internal.core.pdom.db.DBProperties.setProperty(DBProperties.java:104)
+	at org.eclipse.cdt.internal.core.pdom.WritablePDOM.setProperty(WritablePDOM.java:200)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.setResume(AbstractIndexerTask.java:625)
+	at org.eclipse.cdt.internal.core.pdom.AbstractIndexerTask.runTask(AbstractIndexerTask.java:544)
+	at org.eclipse.cdt.internal.core.pdom.indexer.PDOMIndexerTask.run(PDOMIndexerTask.java:161)
+	at org.eclipse.cdt.internal.core.pdom.PDOMIndexerJob.run(PDOMIndexerJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SUBENTRY 1 org.eclipse.cdt.core 4 0 2023-05-27 21:07:50.864
+!MESSAGE Error
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 21:07:54.640
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-27 21:07:56.783
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+!SESSION 2023-05-28 00:00:09.718 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization F:/quartus-lite-18.1.0.625-windows/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization F:/quartus-lite-18.1.0.625-windows/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2023-05-28 00:00:50.358
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1. ; version: 1.100.0.v20160217-0435
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:176)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:88)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:70)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:165)
+	... 9 more
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:00:54.909
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:00:57.067
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:36:00.521
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:36:02.688
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:41:38.157
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:41:40.268
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:54:45.461
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x8009098 --id=0x0 --timestamp=1685188955]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2023-05-28 00:54:47.545
+!MESSAGE Executing: [F:/quartus-lite-18.1.0.625-windows/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x8009098 --id=0x0 --timestamp=1685188955 /cygdrive/f/Quartus-lite-18.1.0.625-windows/labs/Final/software/usb/usb.elf]
