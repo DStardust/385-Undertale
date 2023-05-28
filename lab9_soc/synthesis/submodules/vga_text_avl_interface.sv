@@ -43,6 +43,7 @@ module vga_text_avl_interface (
 	input  logic [3:0] AVL_BYTE_EN,			// Avalon-MM Byte Enable
 	input  logic [11:0] AVL_ADDR,			// Avalon-MM Address
 	input  logic [31:0] AVL_WRITEDATA,		// Avalon-MM Write Data
+	input	 logic [1:0] Difficulty,
 	output logic [31:0] AVL_READDATA,		// Avalon-MM Read Data
 	
 	// Exported Conduit (mapped to VGA port - make sure you export in Platform Designer)
@@ -51,6 +52,8 @@ module vga_text_avl_interface (
 	output logic [7:0]  red, green, blue,	// VGA color channels (mapped to output pins in top-level)
 	output logic arrived_door,
 	output logic arrived_monster,
+	output logic time_up,
+	output logic [3:0] HP,
 	output logic hs, vs,					// VGA HS/VS
 	output logic sync, blank, pixel_clk		// Required by DE2-115 video encoder
 );
@@ -62,7 +65,7 @@ module vga_text_avl_interface (
 //logic [31:0] vram_data;
 //logic [31:0] vram_read_temp;
 
-logic [19:0] title_address, frisk_address, frisk_address2, intro_address, map1_address, map2_address, door_address, heart_address, field_address, flower_address;
+logic [19:0] title_address, frisk_address, frisk_address2, intro_address, map1_address, map2_address, door_address, heart_address, field_address, flower_address, bullets_address, win_address, lose_address;
 logic [6:0] font_address;
 logic [5:0] font_out1, font_out2, font_out3, font_out4, font_out5, font_out6;
 logic [3:0] intro_num1, intro_num2;
@@ -71,6 +74,7 @@ logic [11:0] char_index;
 logic [9:0] font_addr1, font_addr2;
 logic [10:0] vram_index;
 logic [9:0] DrawX, DrawY;
+logic [9:0] PosXH, PosYH;
 logic [6:0] row, col;
 
 logic [7:0] font_data1, font_data2;
@@ -79,6 +83,7 @@ logic [15:0] vram_code;
 logic [6:0] font_num;
 
 logic [5:0] counter;
+logic [9:0] counter2;
 
 logic [23:0] color_out_t;
 logic [23:0] color_out_m1, color_out_m2;
@@ -89,6 +94,8 @@ logic [23:0] color_out_fl1, color_out_fl2, color_out_fl3;
 logic [23:0] color_out_i1, color_out_i2, color_out_i3, color_out_i4, color_out_i5, color_out_i6, color_out_i7, color_out_i8, color_out_i9, color_out_i10;
 logic [23:0] color_out_f1, color_out_f2, color_out_f3, color_out_f4, color_out_f5, color_out_f6, color_out_f7, color_out_f8, color_out_f9, color_out_f10;
 logic [23:0] color_out_f12, color_out_f22, color_out_f32, color_out_f42, color_out_f52, color_out_f62, color_out_f72, color_out_f82, color_out_f92, color_out_f102;
+logic [23:0] color_out_b1, color_out_b2, color_out_b;
+logic [23:0] color_out_win, color_out_lose;
 
 logic [1:0] direction;
 
@@ -103,7 +110,10 @@ logic is_door;
 logic is_heart;
 logic is_field;
 logic is_flower1, is_flower2, is_flower3;
+logic is_bullets;
+logic is_win, is_lose;
 
+logic start_bullet, bullet_shape;
 
 //Declare submodules..e.g. VGA controller, ROMS, etc
 vga_controller vga_controller_instance(.Clk(CLK), .Reset(RESET), .hs(hs), .vs(vs), .pixel_clk(pixel_clk), .blank(blank), .sync(sync), .DrawX(DrawX), .DrawY(DrawY));
@@ -121,7 +131,7 @@ title title(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_title(is_title), 
 title_rom title_rom(.title_address(title_address), .color_out(color_out_t));
 
 map1 map1(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_map1(is_map1), .map1_address(map1_address));
-//map1_rom map1_rom(.map1_address(map1_address), .color_out(color_out_m1));
+map1_rom map1_rom(.map1_address(map1_address), .color_out(color_out_m1));
 
 map2 map2(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_map2(is_map2), .map2_address(map2_address));
 map2_rom map2_rom(.map2_address(map2_address), .color_out(color_out_m2));
@@ -154,13 +164,13 @@ frisk8_rom frisk8_rom2(.frisk8_address(frisk_address2), .color_out(color_out_f82
 frisk9_rom frisk9_rom2(.frisk9_address(frisk_address2), .color_out(color_out_f92));
 frisk10_rom frisk10_rom2(.frisk10_address(frisk_address2), .color_out(color_out_f102));
 
-heart_move heartmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_heart(is_heart), .status(status), .heart_address(heart_address));
+heart_move heartmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_heart(is_heart), .PosXH(PosXH), .PosYH(PosYH), .status(status), .heart_address(heart_address));
 heart_rom heart_rom(.heart_address(heart_address), .color_out(color_out_h));
 
 field field(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_field(is_field), .field_address(field_address));
 field_rom field_rom(.field_address(field_address), .color_out(color_out_fi));
 
-flower flower(.frame_clk(vs), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_flower1(is_flower1), .is_flower2(is_flower2), .is_flower3(is_flower3), .flower_address(flower_address));
+flower flower(.frame_clk(vs), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_flower1(is_flower1), .is_flower2(is_flower2), .is_flower3(is_flower3), .time_up(time_up), .start_bullet(start_bullet), .flower_address(flower_address));
 flower1_rom flower1_rom(.flower_address(flower_address), .color_out(color_out_fl1));
 flower2_rom flower2_rom(.flower_address(flower_address), .color_out(color_out_fl2));
 flower3_rom flower3_rom(.flower_address(flower_address), .color_out(color_out_fl3));
@@ -168,16 +178,34 @@ flower3_rom flower3_rom(.flower_address(flower_address), .color_out(color_out_fl
 intro intro(.frame_clk(vs), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_intro1(is_intro1), .is_intro2(is_intro2), .is_intro3(is_intro3), .is_intro4(is_intro4),
 .is_intro5(is_intro5), .is_intro6(is_intro6), .is_intro7(is_intro7), .is_intro8(is_intro8), .is_intro9(is_intro9), .is_intro10(is_intro10), .is_sub1(is_sub1), .is_sub2(is_sub2),
 .intro_num1(intro_num1), .intro_num2(intro_num2), .intro_address(intro_address));
-//intro1_rom intro1_rom(.intro1_address(intro_address), .color_out(color_out_i1));
-//intro2_rom intro2_rom(.intro2_address(intro_address), .color_out(color_out_i2));
-//intro3_rom intro3_rom(.intro3_address(intro_address), .color_out(color_out_i3));
-//intro4_rom intro4_rom(.intro4_address(intro_address), .color_out(color_out_i4));
-//intro5_rom intro5_rom(.intro5_address(intro_address), .color_out(color_out_i5));
-//intro6_rom intro6_rom(.intro6_address(intro_address), .color_out(color_out_i6));
-//intro7_rom intro7_rom(.intro7_address(intro_address), .color_out(color_out_i7));
-//intro8_rom intro8_rom(.intro8_address(intro_address), .color_out(color_out_i8));
-//intro9_rom intro9_rom(.intro9_address(intro_address), .color_out(color_out_i9));
-//intro10_rom intro10_rom(.intro10_address(intro_address), .color_out(color_out_i10));
+intro1_rom intro1_rom(.intro1_address(intro_address), .color_out(color_out_i1));
+intro2_rom intro2_rom(.intro2_address(intro_address), .color_out(color_out_i2));
+intro3_rom intro3_rom(.intro3_address(intro_address), .color_out(color_out_i3));
+intro4_rom intro4_rom(.intro4_address(intro_address), .color_out(color_out_i4));
+intro5_rom intro5_rom(.intro5_address(intro_address), .color_out(color_out_i5));
+intro6_rom intro6_rom(.intro6_address(intro_address), .color_out(color_out_i6));
+intro7_rom intro7_rom(.intro7_address(intro_address), .color_out(color_out_i7));
+intro8_rom intro8_rom(.intro8_address(intro_address), .color_out(color_out_i8));
+intro9_rom intro9_rom(.intro9_address(intro_address), .color_out(color_out_i9));
+intro10_rom intro10_rom(.intro10_address(intro_address), .color_out(color_out_i10));
+
+bullets_move bullets_move(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .counter(counter2), .DrawX(DrawX), .DrawY(DrawY), .PosXH(PosXH), .PosYH(PosYH), .HP(HP), .is_bullets(is_bullets), .start_bullet(start_bullet), .status(status), .Difficulty(Difficulty), .bullet_shape(bullet_shape), .bullets_address(bullets_address));
+bullet1_rom bullet1_rom(.bullet1_address(bullets_address), .color_out(color_out_b1));
+bullet2_rom bullet2_rom(.bullet2_address(bullets_address), .color_out(color_out_b2));
+
+win win(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_win(is_win), .win_address(win_address));
+win_rom win_rom(.win_address(win_address), .color_out(color_out_win));
+
+lose lose(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_lose(is_lose), .lose_address(lose_address));
+lose_rom lose_rom(.lose_address(lose_address), .color_out(color_out_lose));
+
+always_comb
+begin
+	if (bullet_shape == 1'b0)
+		color_out_b = color_out_b1;
+	else
+		color_out_b = color_out_b2;
+end
 
 always_comb
 begin
@@ -265,13 +293,21 @@ begin
 		counter ++;
 		if (counter == 6'd60) 
 		begin
-			counter <= 6'b00;
+			counter <= 6'b0;
 		end
 	end
 	else 
 	begin
 		counter <= 6'b0;
 	end
+end
+
+always_ff @(posedge vs)
+begin
+		if (counter2 == 10'd1023) 
+			counter2 <= 10'b0;
+		else
+			counter2 ++;
 end
 
 always_comb
@@ -1514,6 +1550,42 @@ begin
 			green <= color_out_m2[15:8];
 			blue <= color_out_m2[7:0];
 		end
+		else if (is_bullets)
+		begin
+			if (color_out_b == 24'h0)
+			begin
+				if (is_heart)
+				begin
+					red <= color_out_h[23:16];
+					green <= color_out_h[15:8];
+					blue <= color_out_h[7:0];
+				end
+				else if (is_field)
+				begin
+					red <= color_out_fi[23:16];
+					green <= color_out_fi[15:8];
+					blue <= color_out_fi[7:0];
+				end
+				else if (is_flower3)
+				begin
+					red <= color_out_fl3[23:16];
+					green <= color_out_fl3[15:8];
+					blue <= color_out_fl3[7:0];
+				end
+				else
+				begin
+					red <= 8'h0;
+					green <= 8'h0;
+					blue <= 8'h0;
+				end
+			end
+			else
+			begin
+				red <= color_out_b[23:16];
+				green <= color_out_b[15:8];
+				blue <= color_out_b[7:0];
+			end
+		end
 		else if (is_heart)
 		begin
 			red <= color_out_h[23:16];
@@ -1543,6 +1615,18 @@ begin
 			red <= color_out_fl3[23:16];
 			green <= color_out_fl3[15:8];
 			blue <= color_out_fl3[7:0];
+		end
+		else if (is_win)
+		begin
+			red <= color_out_win[23:16];
+			green <= color_out_win[15:8];
+			blue <= color_out_win[7:0];
+		end
+		else if (is_lose)
+		begin
+			red <= color_out_lose[23:16];
+			green <= color_out_lose[15:8];
+			blue <= color_out_lose[7:0];
 		end
 		else
 		begin

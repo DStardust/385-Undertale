@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="lab9_soc" kind="system" version="18.1" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2023.05.27.20:03:33 -->
+ <!-- 2023.05.28.18:09:11 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1685188955</value>
+  <value>1685268492</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -762,6 +762,24 @@ parameters are a RESULT of the module parameters. -->
     <direction>Output</direction>
     <width>1</width>
     <role>arrived_monster</role>
+   </port>
+   <port>
+    <name>HP</name>
+    <direction>Output</direction>
+    <width>4</width>
+    <role>hp</role>
+   </port>
+   <port>
+    <name>time_up</name>
+    <direction>Output</direction>
+    <width>1</width>
+    <role>time_up</role>
+   </port>
+   <port>
+    <name>Difficulty</name>
+    <direction>Input</direction>
+    <width>2</width>
+    <role>difficulty</role>
    </port>
   </interface>
  </module>
@@ -14814,7 +14832,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1685188955</value>
+   <value>1685268492</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -14834,7 +14852,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1685188955</value>
+   <value>1685268492</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -14850,7 +14868,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1685188955</value>
+   <value>1685268492</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -25442,5 +25460,5 @@ parameters are a RESULT of the module parameters. -->
   <version>18.1</version>
  </plugin>
  <reportVersion>18.1 625</reportVersion>
- <uniqueIdentifier>BC6EE2DCA2EE000001885D16E585</uniqueIdentifier>
+ <uniqueIdentifier>BC6EE2DCA2EE0000018861D485D7</uniqueIdentifier>
 </EnsembleReport>

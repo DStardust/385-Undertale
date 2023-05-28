@@ -1,11 +1,13 @@
 
 State Machine - |lab9|state:states|curr_state
-Name curr_state.map2 curr_state.map1 curr_state.intro curr_state.title curr_state.battle 
-curr_state.title 0 0 0 0 0 
-curr_state.intro 0 0 1 1 0 
-curr_state.map1 0 1 0 1 0 
-curr_state.map2 1 0 0 1 0 
-curr_state.battle 0 0 0 1 1 
+Name curr_state.lose curr_state.win curr_state.battle curr_state.map2 curr_state.map1 curr_state.intro curr_state.title 
+curr_state.title 0 0 0 0 0 0 0 
+curr_state.intro 0 0 0 0 0 1 1 
+curr_state.map1 0 0 0 0 1 0 1 
+curr_state.map2 0 0 0 1 0 0 1 
+curr_state.battle 0 0 1 0 0 0 1 
+curr_state.win 0 1 0 0 0 0 1 
+curr_state.lose 1 0 0 0 0 0 1 
 
 State Machine - |lab9|audio_interface:audio_interface|state
 Name state.b_end state.b_stop1 state.b_stop0 state.d_ack state.d7 state.d6 state.d5 state.d4 state.d3 state.d2 state.d1 state.d0 state.a_ack state.a7 state.a6 state.a5 state.a4 state.a3 state.a2 state.a1 state.a0 state.b_ack state.b7 state.b6 state.b5 state.b4 state.b3 state.b2 state.b1 state.b0 state.start state.initialize 

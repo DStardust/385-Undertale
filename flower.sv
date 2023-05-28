@@ -6,6 +6,8 @@ module flower
 		output logic is_flower1,					// Whether current pixel belongs to background
 		output logic is_flower2,
 		output logic is_flower3,
+		output logic time_up,
+		output logic start_bullet,
 		output logic [19:0] flower_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
@@ -19,25 +21,37 @@ always_ff @(posedge frame_clk) begin
 			12'd1:
 			begin
 				flower_num <= 3'd1;
+				start_bullet <= 1'b0;
 				counter ++;
 			end
 			12'd120:
 			begin
 				flower_num <= 3'd2;
+				start_bullet <= 1'b0;
 				counter ++;
 			end
 			12'd240:
 			begin
 				flower_num <= 3'd3;
+				start_bullet <= 1'b1;
 				counter ++;
 			end
+			12'd3840:
+			begin
+				time_up = 1'b1;
+			end
 			default:
+			begin
+				time_up = 1'b0;
 				counter ++;
+			end
 		endcase
 	end
 	else begin
+		time_up = 1'b0;
 		counter <= 12'b0;
 		flower_num <= 3'd0;
+		start_bullet <= 1'b0;
 	end
 end
 

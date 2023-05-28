@@ -35,7 +35,10 @@ module lab9_soc (
 		input  wire [3:0]  vga_port_status,          //                .status
 		input  wire [7:0]  vga_port_keycode,         //                .keycode
 		output wire        vga_port_arrived_door,    //                .arrived_door
-		output wire        vga_port_arrived_monster  //                .arrived_monster
+		output wire        vga_port_arrived_monster, //                .arrived_monster
+		output wire [3:0]  vga_port_hp,              //                .hp
+		output wire        vga_port_time_up,         //                .time_up
+		input  wire [1:0]  vga_port_difficulty       //                .difficulty
 	);
 
 	wire         sdram_pll_c0_clk;                                                     // sdram_pll:c0 -> [mm_interconnect_0:sdram_pll_c0_clk, rst_controller_002:clk, sdram:clk]
@@ -167,7 +170,10 @@ module lab9_soc (
 		.status          (vga_port_status),                                                      //             .status
 		.keycode         (vga_port_keycode),                                                     //             .keycode
 		.arrived_door    (vga_port_arrived_door),                                                //             .arrived_door
-		.arrived_monster (vga_port_arrived_monster)                                              //             .arrived_monster
+		.arrived_monster (vga_port_arrived_monster),                                             //             .arrived_monster
+		.HP              (vga_port_hp),                                                          //             .hp
+		.time_up         (vga_port_time_up),                                                     //             .time_up
+		.Difficulty      (vga_port_difficulty)                                                   //             .difficulty
 	);
 
 	lab9_soc_jtag_uart_0 jtag_uart_0 (

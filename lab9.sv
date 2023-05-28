@@ -65,9 +65,13 @@ module lab9( input               CLOCK_50,
 //				 output logic        SRAM_WE_N     //                   .WE_N
 				);
     
+	 logic [3:0] HP;
+	 logic [1:0] Difficulty;
+	 logic time_up;
     logic Reset_h, Clk;
 	 logic arrived_door;
 	 logic arrived_monster;
+	 logic is_press;
 	 logic [3:0] status;
 	 logic [7:0] keycode;
 	 logic [1:0] hpi_addr;
@@ -119,7 +123,10 @@ module lab9( input               CLOCK_50,
 					.vga_port_status (status),
 					.vga_port_keycode(keycode),
 					.vga_port_arrived_door(arrived_door),
-					.vga_port_arrived_monster(arrived_monster)
+					.vga_port_arrived_monster(arrived_monster),
+					.vga_port_hp(HP),
+					.vga_port_time_up(time_up),
+					.vga_port_difficulty(Difficulty)
     );
 	 
 	     // Interface between NIOS II and EZ-OTG chip
@@ -171,6 +178,14 @@ module lab9( input               CLOCK_50,
 			begin
 				music_content = music_content2;
 			end
+			4'd6:
+			begin
+				music_content = music_content1;
+			end
+			4'd7:
+			begin
+				music_content = music_content1;
+			end
 			default: music_content <= 17'b0;
 			endcase
 	 end
@@ -192,11 +207,31 @@ module lab9( input               CLOCK_50,
 											 .I2C_SCLK(I2C_SCLK),
 											 .ADCDATA(ADCDATA));
 	 
-	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status), .arrived_door(arrived_door), .arrived_monster(arrived_monster));
+	 state states(.Clk(Clk), .Reset(Reset_h), .keycode(keycode), .status(status), .arrived_door(arrived_door), .arrived_monster(arrived_monster), .HP(HP), .time_up(time_up));
 	 
-    HexDriver hex_inst_0 (music_content[3:0], HEX0);
-    HexDriver hex_inst_1 (music_content[7:4], HEX1);
-	 HexDriver hex_inst_2 (music_content[11:8], HEX2);
-    HexDriver hex_inst_3 (music_content[15:12], HEX3);
+	 always_ff @ (posedge Clk)
+    begin
+		if (status != 4'd5)
+        begin
+            Difficulty <= 2'd1;
+        end
+		else
+		begin
+			case (keycode)
+			7'd30:
+				Difficulty <= 2'd1;
+			7'd31:
+				Difficulty <= 2'd2;
+			7'd32:
+				Difficulty <= 2'd3;
+			default:;
+			endcase
+		end
+	 end
+	 
+    HexDriver hex_inst_0 (HP, HEX0);
+	 assign HEX1 = 7'hFF;
+	 assign HEX2 = 7'h0C;
+	 assign HEX3 = 7'h09;
 	 
 endmodule

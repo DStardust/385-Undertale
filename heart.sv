@@ -5,16 +5,17 @@ module heart_move
 		input [3:0] status,
 		input [7:0]	  keycode,
 		input  logic [9:0] DrawX, DrawY,				// Current pixel coordinates
+		output logic [9:0] PosXH, PosYH,
 		output logic is_heart,					// Whether current pixel belongs to background
 		output logic [19:0] heart_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-	parameter [9:0] heart_X_Init = 10'd311;  // Center position on the X axis
-    parameter [9:0] heart_Y_Init = 10'd309;  // Center position on the Y axis
-    parameter [9:0] heart_X_Min = 10'd243;       // Leftmost point on the X axis
-    parameter [9:0] heart_X_Max = 10'd382;     // Rightmost point on the X axis
-    parameter [9:0] heart_Y_Min = 10'd244;       // Topmost point on the Y axis
-    parameter [9:0] heart_Y_Max = 10'd358;     // Bottommost point on the Y axis
+	 parameter [9:0] heart_X_Init = 10'd319;  // Center position on the X axis
+    parameter [9:0] heart_Y_Init = 10'd317;  // Center position on the Y axis
+    parameter [9:0] heart_X_Min = 10'd251;       // Leftmost point on the X axis
+    parameter [9:0] heart_X_Max = 10'd390;     // Rightmost point on the X axis
+    parameter [9:0] heart_Y_Min = 10'd252;       // Topmost point on the Y axis
+    parameter [9:0] heart_Y_Max = 10'd366;     // Bottommost point on the Y axis
     parameter [9:0] heart_X_Step = 10'd1;      // Step size on the X axis
     parameter [9:0] heart_Y_Step = 10'd1;      // Step size on the Y axis
 
@@ -43,6 +44,8 @@ module heart_move
             heart_Y_Pos <= heart_Y_Pos_in;
             heart_X_Motion <= heart_X_Motion_in;
             heart_Y_Motion <= heart_Y_Motion_in;
+				PosXH <= heart_X_Pos;
+				PosYH <= heart_Y_Pos;
         end
     end
 
@@ -113,7 +116,6 @@ module heart_move
 							if( heart_X_Pos >= heart_X_Max ) begin// heart is at the right edge, BOUNCE!
 								heart_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
-								
 							end
 							else begin
 								heart_X_Motion_in = heart_X_Step;
@@ -157,9 +159,9 @@ module heart_move
     assign DistX = DrawX - heart_X_Pos;
     assign DistY = DrawY - heart_Y_Pos;
     always_comb begin
-        if ( DistX >= 0 && DistX < 16 && DistY >= 0 && DistY < 16 && status == 4'd5) begin
+        if ( DistX >= -8 && DistX < 8 && DistY >= -8 && DistY < 8 && status == 4'd5) begin
             is_heart = 1'b1;
-				heart_address = DrawX - heart_X_Pos + (DrawY - heart_Y_Pos) * 16;
+				heart_address = DrawX - heart_X_Pos + 8 + (DrawY - heart_Y_Pos + 8) * 16;
 		  end
         else begin
             is_heart = 1'b0;
