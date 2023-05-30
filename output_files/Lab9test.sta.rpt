@@ -1,5 +1,5 @@
 Timing Analyzer report for Lab9test
-Sun May 28 21:05:27 2023
+Mon May 29 17:09:18 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -115,15 +115,15 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 16          ;
 ; Maximum allowed            ; 16          ;
 ;                            ;             ;
-; Average used               ; 2.14        ;
+; Average used               ; 1.93        ;
 ; Maximum used               ; 16          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  15.9%      ;
-;     Processor 3            ;  11.9%      ;
-;     Processor 4            ;  10.6%      ;
-;     Processors 5-16        ;   6.3%      ;
+;     Processor 2            ;  24.8%      ;
+;     Processor 3            ;  11.7%      ;
+;     Processor 4            ;   9.9%      ;
+;     Processors 5-16        ;   3.9%      ;
 +----------------------------+-------------+
 
 
@@ -132,10 +132,10 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------+--------+--------------------------+
 ; SDC File Path                                                              ; Status ; Read at                  ;
 +----------------------------------------------------------------------------+--------+--------------------------+
-; lab9.sdc                                                                   ; OK     ; Sun May 28 21:05:17 2023 ;
-; lab9_soc/synthesis/submodules/altera_reset_controller.sdc                  ; OK     ; Sun May 28 21:05:17 2023 ;
-; lab9_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc ; OK     ; Sun May 28 21:05:17 2023 ;
-; lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu.sdc                ; OK     ; Sun May 28 21:05:17 2023 ;
+; lab9.sdc                                                                   ; OK     ; Mon May 29 17:08:57 2023 ;
+; lab9_soc/synthesis/submodules/altera_reset_controller.sdc                  ; OK     ; Mon May 29 17:08:57 2023 ;
+; lab9_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc ; OK     ; Mon May 29 17:08:57 2023 ;
+; lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu.sdc                ; OK     ; Mon May 29 17:08:57 2023 ;
 +----------------------------------------------------------------------------+--------+--------------------------+
 
 
@@ -1367,7 +1367,6 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 ; 0.353 ; lab9_soc:u0|lab9_soc_sdram:sdram|i_refs[1]                                                                                                                                                                                                             ; lab9_soc:u0|lab9_soc_sdram:sdram|i_refs[1]                                                                                                                                                                                                             ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_sdram:sdram|i_next.101                                                                                                                                                                                                            ; lab9_soc:u0|lab9_soc_sdram:sdram|i_next.101                                                                                                                                                                                                            ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_sdram:sdram|i_state.101                                                                                                                                                                                                           ; lab9_soc:u0|lab9_soc_sdram:sdram|i_state.101                                                                                                                                                                                                           ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
-; 0.353 ; audio_interface:audio_interface|flag1                                                                                                                                                                                                                  ; audio_interface:audio_interface|flag1                                                                                                                                                                                                                  ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|d_write                                                                                                                                                                   ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|d_write                                                                                                                                                                   ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:vga_text_mode_controller_0_avl_mm_slave_agent_rsp_fifo|mem_used[1]                                                                                                      ; lab9_soc:u0|lab9_soc_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:vga_text_mode_controller_0_avl_mm_slave_agent_rsp_fifo|mem_used[1]                                                                                                      ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:sysid_qsys_0_control_slave_agent_rsp_fifo|mem_used[1]                                                                                                                   ; lab9_soc:u0|lab9_soc_mm_interconnect_0:mm_interconnect_0|altera_avalon_sc_fifo:sysid_qsys_0_control_slave_agent_rsp_fifo|mem_used[1]                                                                                                                   ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
@@ -1384,6 +1383,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 ; 0.353 ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|av_ld_waiting_for_data                                                                                                                                                    ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|av_ld_waiting_for_data                                                                                                                                                    ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|lab9_soc_nios2_gen2_0_cpu_nios2_oci:the_lab9_soc_nios2_gen2_0_cpu_nios2_oci|lab9_soc_nios2_gen2_0_cpu_nios2_ocimem:the_lab9_soc_nios2_gen2_0_cpu_nios2_ocimem|jtag_ram_wr ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|lab9_soc_nios2_gen2_0_cpu_nios2_oci:the_lab9_soc_nios2_gen2_0_cpu_nios2_oci|lab9_soc_nios2_gen2_0_cpu_nios2_ocimem:the_lab9_soc_nios2_gen2_0_cpu_nios2_ocimem|jtag_ram_wr ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.353 ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|lab9_soc_nios2_gen2_0_cpu_nios2_oci:the_lab9_soc_nios2_gen2_0_cpu_nios2_oci|lab9_soc_nios2_gen2_0_cpu_nios2_ocimem:the_lab9_soc_nios2_gen2_0_cpu_nios2_ocimem|jtag_rd     ; lab9_soc:u0|lab9_soc_nios2_gen2_0:nios2_gen2_0|lab9_soc_nios2_gen2_0_cpu:cpu|lab9_soc_nios2_gen2_0_cpu_nios2_oci:the_lab9_soc_nios2_gen2_0_cpu_nios2_oci|lab9_soc_nios2_gen2_0_cpu_nios2_ocimem:the_lab9_soc_nios2_gen2_0_cpu_nios2_ocimem|jtag_rd     ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
+; 0.353 ; audio_interface:audio_interface|flag1                                                                                                                                                                                                                  ; audio_interface:audio_interface|flag1                                                                                                                                                                                                                  ; Clk          ; Clk         ; 0.000        ; 0.073      ; 0.597      ;
 ; 0.354 ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet9_Y_Pos[9]                                                                                                                                               ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet9_Y_Pos[9]                                                                                                                                               ; Clk          ; Clk         ; 0.000        ; 0.072      ; 0.597      ;
 ; 0.354 ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet5_X_Pos[0]                                                                                                                                               ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet5_X_Pos[0]                                                                                                                                               ; Clk          ; Clk         ; 0.000        ; 0.072      ; 0.597      ;
 ; 0.354 ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet5_X_Pos[5]                                                                                                                                               ; lab9_soc:u0|vga_text_avl_interface:vga_text_mode_controller_0|bullets_move:bullets_move|bullet5_X_Pos[5]                                                                                                                                               ; Clk          ; Clk         ; 0.000        ; 0.072      ; 0.597      ;
@@ -3573,7 +3573,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun May 28 21:05:13 2023
+    Info: Processing started: Mon May 29 17:08:50 2023
 Info: Command: quartus_sta Lab9test -c Lab9test
 Info: qsta_default_script.tcl version: #1
 Warning (136023): Incompatible bus dimensions on node name "OTG_INT[0]", expecting <= 0 dimension(s)  File: F:/Quartus-lite-18.1.0.625-windows/labs/Final/lab9.sv Line: 36
@@ -4403,9 +4403,9 @@ Info (332114): Report Metastability: Found 15 synchronizer chains.
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus Prime Timing Analyzer was successful. 0 errors, 661 warnings
-    Info: Peak virtual memory: 5460 megabytes
-    Info: Processing ended: Sun May 28 21:05:27 2023
-    Info: Elapsed time: 00:00:14
-    Info: Total CPU time (on all processors): 00:00:15
+    Info: Peak virtual memory: 5486 megabytes
+    Info: Processing ended: Mon May 29 17:09:18 2023
+    Info: Elapsed time: 00:00:28
+    Info: Total CPU time (on all processors): 00:00:24
 
 

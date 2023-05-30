@@ -67,14 +67,12 @@ module heart_move
             //   both sides of the operator as UNSIGNED numbers.
             // e.g. heart_Y_Pos - heart_Size <= heart_Y_Min 
             // If heart_Y_Pos is 0, then heart_Y_Pos - heart_Size will not be -4, but rather a large positive number.
-            
-            // TODO: Add other boundary detections and handle keypress here.
-             
+
 					case (keycode)
 						8'd26:
 						begin
 							
-							if ( heart_Y_Pos <= heart_Y_Min ) begin // heart is at the top edge, BOUNCE!
+							if ( heart_Y_Pos <= heart_Y_Min ) begin // heart is at the top edge!
 								heart_Y_Motion_in = 10'b0;
 								mark_ymin = 1'b1;
 							end
@@ -87,7 +85,7 @@ module heart_move
 						8'd04:
 						begin
 							
-							if ( heart_X_Pos <= heart_X_Min ) begin// heart is at the left edge, BOUNCE!
+							if ( heart_X_Pos <= heart_X_Min ) begin// heart is at the left edge!
 								heart_X_Motion_in = 10'b0;
 								mark_xmin = 1'b1;
 							end
@@ -100,7 +98,7 @@ module heart_move
 						8'd22:
 						begin
 							
-							if( heart_Y_Pos >= heart_Y_Max ) begin // heart is at the bottom edge, BOUNCE!
+							if( heart_Y_Pos >= heart_Y_Max ) begin // heart is at the bottom edge!
 								heart_Y_Motion_in = 10'b0;
 								mark_ymax = 1'b1;
 							end
@@ -113,7 +111,7 @@ module heart_move
 						8'd07:
 						begin
 							
-							if( heart_X_Pos >= heart_X_Max ) begin// heart is at the right edge, BOUNCE!
+							if( heart_X_Pos >= heart_X_Max ) begin// heart is at the right edge!
 								heart_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
 							end
@@ -179,7 +177,7 @@ module  heart_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 256 addresses
 logic [3:0] mem [0:255];
 
 logic [23:0] col [7:0];

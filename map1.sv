@@ -37,7 +37,7 @@ module map1
         frame_clk_rising_edge <= (frame_clk == 1'b1) && (frame_clk_delayed == 1'b0);
     end
 
-	always_ff @ (posedge Clk)
+	always_ff @ (posedge Clk) // reset or update the position and motion of the map according to the status
     begin
         if (status != 4'd3)
         begin
@@ -65,14 +65,12 @@ module map1
             //   both sides of the operator as UNSIGNED numbers.
             // e.g. map1_Y_Pos - map1_Size <= map1_Y_Min 
             // If map1_Y_Pos is 0, then map1_Y_Pos - map1_Size will not be -4, but rather a large positive number.
-            
-            // TODO: Add other boundary detections and handle keypress here.
-             
+
 					case (keycode)
 						8'd07:
 						begin
 							
-							if ( map1_X_Pos <= map1_X_Min ) begin// map1 is at the left edge, BOUNCE!
+							if ( map1_X_Pos <= map1_X_Min ) begin// map1 is at the left edge!
 								map1_X_Motion_in = 10'b0;
 								mark_xmin = 1'b1;
 							end
@@ -84,7 +82,7 @@ module map1
 						8'd04:
 						begin
 							
-							if( map1_X_Pos >= map1_X_Max ) begin// map1 is at the right edge, BOUNCE!
+							if( map1_X_Pos >= map1_X_Max ) begin// map1 is at the right edge!
 								map1_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
 							end
@@ -134,7 +132,7 @@ module  map1_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 131072 addresses
 logic [3:0] mem [0:131071];
 
 logic [23:0] col [7:0];

@@ -65,14 +65,12 @@ module frisk_move
             //   both sides of the operator as UNSIGNED numbers.
             // e.g. Frisk_Y_Pos - Frisk_Size <= Frisk_Y_Min 
             // If Frisk_Y_Pos is 0, then Frisk_Y_Pos - Frisk_Size will not be -4, but rather a large positive number.
-            
-            // TODO: Add other boundary detections and handle keypress here.
              
 					case (keycode)
 						8'd26:
 						begin
 							
-							if ( Frisk_Y_Pos <= Frisk_Y_Min ) begin // Frisk is at the top edge, BOUNCE!
+							if ( Frisk_Y_Pos <= Frisk_Y_Min ) begin // Frisk is at the top edge!
 								Frisk_Y_Motion_in = 10'b0;
 								mark_ymin = 1'b1;
 							end
@@ -85,7 +83,7 @@ module frisk_move
 						8'd04:
 						begin
 							
-							if ( Frisk_X_Pos <= Frisk_X_Min ) begin// Frisk is at the left edge, BOUNCE!
+							if ( Frisk_X_Pos <= Frisk_X_Min ) begin// Frisk is at the left edge!
 								Frisk_X_Motion_in = 10'b0;
 								mark_xmin = 1'b1;
 							end
@@ -98,7 +96,7 @@ module frisk_move
 						8'd22:
 						begin
 							
-							if( Frisk_Y_Pos >= Frisk_Y_Max ) begin // Frisk is at the bottom edge, BOUNCE!
+							if( Frisk_Y_Pos >= Frisk_Y_Max ) begin // Frisk is at the bottom edge!
 								Frisk_Y_Motion_in = 10'b0;
 								mark_ymax = 1'b1;
 							end
@@ -111,7 +109,7 @@ module frisk_move
 						8'd07:
 						begin
 							
-							if( Frisk_X_Pos >= Frisk_X_Max ) begin// Frisk is at the right edge, BOUNCE!
+							if( Frisk_X_Pos >= Frisk_X_Max ) begin// Frisk is at the right edge!
 								Frisk_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
 								
@@ -245,14 +243,12 @@ module frisk_move2
             //   both sides of the operator as UNSIGNED numbers.
             // e.g. Frisk_Y_Pos - Frisk_Size <= Frisk_Y_Min 
             // If Frisk_Y_Pos is 0, then Frisk_Y_Pos - Frisk_Size will not be -4, but rather a large positive number.
-            
-            // TODO: Add other boundary detections and handle keypress here.
-             
+  
 					case (keycode)
 						8'd26:
 						begin
 							
-							if ( Frisk_Y_Pos <= Frisk_Y_Min ) begin // Frisk is at the top edge, BOUNCE!
+							if ( Frisk_Y_Pos <= Frisk_Y_Min ) begin // Frisk is at the top edge!
 								Frisk_Y_Motion_in = 10'b0;
 								mark_ymin = 1'b1;
 							end
@@ -265,7 +261,7 @@ module frisk_move2
 						8'd04:
 						begin
 							
-							if ( Frisk_X_Pos <= Frisk_X_Min ) begin// Frisk is at the left edge, BOUNCE!
+							if ( Frisk_X_Pos <= Frisk_X_Min ) begin// Frisk is at the left edge!
 								Frisk_X_Motion_in = 10'b0;
 								mark_xmin = 1'b1;
 							end
@@ -278,7 +274,7 @@ module frisk_move2
 						8'd22:
 						begin
 							
-							if( Frisk_Y_Pos >= Frisk_Y_Max ) begin // Frisk is at the bottom edge, BOUNCE!
+							if( Frisk_Y_Pos >= Frisk_Y_Max ) begin // Frisk is at the bottom edge!
 								Frisk_Y_Motion_in = 10'b0;
 								mark_ymax = 1'b1;
 							end
@@ -291,7 +287,7 @@ module frisk_move2
 						8'd07:
 						begin
 							
-							if( Frisk_X_Pos >= Frisk_X_Max ) begin// Frisk is at the right edge, BOUNCE!
+							if( Frisk_X_Pos >= Frisk_X_Max ) begin// Frisk is at the right edge!
 								Frisk_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
 								
@@ -364,7 +360,7 @@ module  frisk1_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -390,7 +386,7 @@ module  frisk2_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -416,7 +412,7 @@ module  frisk3_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -442,7 +438,7 @@ module  frisk4_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -468,7 +464,7 @@ module  frisk5_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -494,7 +490,7 @@ module  frisk6_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -520,7 +516,7 @@ module  frisk7_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -546,7 +542,7 @@ module  frisk8_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -572,7 +568,7 @@ module  frisk9_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];
@@ -598,7 +594,7 @@ module  frisk10_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 4096 addresses
 logic [3:0] mem [0:4095];
 
 logic [23:0] col [7:0];

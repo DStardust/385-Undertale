@@ -20,7 +20,7 @@ module intro
 
 logic [11:0] counter;
 
-always_ff @(posedge frame_clk) begin
+always_ff @(posedge frame_clk) begin // counter inside to check if the time reaches 50s and display the animation of the introduction
 
 	if(status == 4'd2)
 	begin
@@ -114,7 +114,7 @@ always_ff @(posedge frame_clk) begin
 	end
 end
 
-always_comb
+always_comb // using intro_num1 and intro_num2 to display different image of introductions at the same position
 	begin
 		is_intro1 = 1'b0;
 		is_intro2 = 1'b0;
@@ -248,7 +248,7 @@ module  intro1_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -273,7 +273,7 @@ module  intro2_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -298,7 +298,7 @@ module  intro3_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -323,7 +323,7 @@ module  intro4_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -348,7 +348,7 @@ module  intro5_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -373,7 +373,7 @@ module  intro6_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -398,7 +398,7 @@ module  intro7_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -423,7 +423,7 @@ module  intro8_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -448,7 +448,7 @@ module  intro9_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -473,7 +473,7 @@ module  intro10_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];
@@ -498,7 +498,7 @@ module  font1_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font1_address];
@@ -516,7 +516,7 @@ module  font2_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font2_address];
@@ -534,7 +534,7 @@ module  font3_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font3_address];
@@ -552,7 +552,7 @@ module  font4_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font4_address];
@@ -570,7 +570,7 @@ module  font5_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font5_address];
@@ -588,7 +588,7 @@ module  font6_rom
 		output logic [5:0] font_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 8 bits and a total of 128 addresses
 logic [7:0] mem [0:127];
 
 assign font_out = mem[font6_address];

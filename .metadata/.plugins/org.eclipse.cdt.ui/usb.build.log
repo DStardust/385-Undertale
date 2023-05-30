@@ -1,9 +1,9 @@
-21:06:51 **** Incremental Build of configuration Nios II for project usb ****
+10:03:45 **** Incremental Build of configuration Nios II for project usb ****
 make all 
 Info: Building ../usb_bsp/
 F:/Quartus-lite-18.1.0.625-windows/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../usb_bsp/
 [BSP build complete]
 [usb build complete]
 
-21:06:52 Build Finished (took 1s.9ms)
+10:03:46 Build Finished (took 600ms)
 

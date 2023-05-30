@@ -6,7 +6,7 @@ module title
 		output logic [19:0] title_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-always_comb
+always_comb // display the map at the specific position
 	begin
 		is_title = 1'b0;
 		title_address = 20'b0;
@@ -28,7 +28,7 @@ module  title_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 8192 addresses
 logic [3:0] mem [0:8191];
 
 logic [23:0] col [7:0];

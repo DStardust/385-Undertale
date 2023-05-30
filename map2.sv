@@ -6,7 +6,7 @@ module map2
 		output logic [19:0] map2_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-always_comb
+always_comb // display the map at the specific position
 	begin
 		is_map2 = 1'b0;
 		map2_address = 20'b0;
@@ -28,7 +28,7 @@ module  map2_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [8:0];

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Lab9test
-Sun May 28 20:55:20 2023
+Mon May 29 16:53:11 2023
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -406,7 +406,7 @@ refer to the applicable agreement for further details.
 +----------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                     ;
 +------------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sun May 28 20:55:20 2023       ;
+; Analysis & Synthesis Status        ; Successful - Mon May 29 16:53:10 2023       ;
 ; Quartus Prime Version              ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                      ; Lab9test                                    ;
 ; Top-level Entity Name              ; lab9                                        ;
@@ -11023,7 +11023,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:11:15     ;
+; Top            ; 00:16:21     ;
 +----------------+--------------+
 
 
@@ -11033,7 +11033,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun May 28 20:36:27 2023
+    Info: Processing started: Mon May 29 16:21:12 2023
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Lab9test -c Lab9test
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 16 processors detected
@@ -11792,7 +11792,7 @@ Info (12128): Elaborating entity "audio_interface" for hierarchy "audio_interfac
 Info (12128): Elaborating entity "state" for hierarchy "state:states" File: F:/Quartus-lite-18.1.0.625-windows/labs/Final/lab9.sv Line: 210
 Info (12128): Elaborating entity "HexDriver" for hierarchy "HexDriver:hex_inst_0" File: F:/Quartus-lite-18.1.0.625-windows/labs/Final/lab9.sv Line: 232
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2023.05.28.20:43:47 Progress: Loading sld6dfc5e3d/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2023.05.29.16:36:25 Progress: Loading sld6dfc5e3d/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -12933,10 +12933,10 @@ Info (21057): Implemented 46178 device resources after synthesis - the final res
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 58 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1010 warnings
-    Info: Peak virtual memory: 5600 megabytes
-    Info: Processing ended: Sun May 28 20:55:21 2023
-    Info: Elapsed time: 00:18:54
-    Info: Total CPU time (on all processors): 00:17:24
+    Info: Peak virtual memory: 5597 megabytes
+    Info: Processing ended: Mon May 29 16:53:11 2023
+    Info: Elapsed time: 00:31:59
+    Info: Total CPU time (on all processors): 00:28:52
 
 
 +------------------------------------------+

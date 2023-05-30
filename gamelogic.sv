@@ -572,96 +572,96 @@ module bullets_move
         if (frame_clk_rising_edge)
         begin
 			if( bullet0_X_Pos >= bullet0_X_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet0_edge = 1'b1;
 			end
 			bullet0_X_Pos_in = bullet0_X_Pos +bullet0_X_Motion;
 
 			if( bullet1_X_Pos >= bullet1_X_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet1_edge = 1'b1;
 			end
 			bullet1_X_Pos_in = bullet1_X_Pos +bullet1_X_Motion;
 
 			if( bullet2_X_Pos >= bullet2_X_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet2_edge = 1'b1;
 			end
 			bullet2_X_Pos_in = bullet2_X_Pos +bullet2_X_Motion;
 
 			if( bullet3_X_Pos <= bullet3_X_Min )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet3_edge = 1'b1;
 			end
 			bullet3_X_Pos_in = bullet3_X_Pos +bullet3_X_Motion;
 
 			if( bullet4_X_Pos <= bullet4_X_Min )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet4_edge = 1'b1;
 			end
 			bullet4_X_Pos_in = bullet4_X_Pos +bullet4_X_Motion;
 
 			if( bullet5_X_Pos <= bullet5_X_Min )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet5_edge = 1'b1;
 			end
 			bullet5_X_Pos_in = bullet5_X_Pos +bullet5_X_Motion;
 
 			if( bullet6_Y_Pos >= bullet6_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet6_edge = 1'b1;
 			end
 			bullet6_Y_Pos_in = bullet6_Y_Pos +bullet6_Y_Motion;
 
 			if( bullet7_Y_Pos >= bullet7_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet7_edge = 1'b1;
 			end
 			bullet7_Y_Pos_in = bullet7_Y_Pos +bullet7_Y_Motion;
 
 			if( bullet8_Y_Pos >= bullet8_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet8_edge = 1'b1;
 			end
 			bullet8_Y_Pos_in = bullet8_Y_Pos +bullet8_Y_Motion;
 
 			if( bullet9_Y_Pos >= bullet9_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet9_edge = 1'b1;
 			end
 			bullet9_Y_Pos_in = bullet9_Y_Pos +bullet9_Y_Motion;
 			bullet9_X_Pos_in = bullet9_X_Pos +bullet9_X_Motion;
 
 			if( bullet10_Y_Pos >= bullet10_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet10_edge = 1'b1;
 			end
 			bullet10_Y_Pos_in = bullet10_Y_Pos +bullet10_Y_Motion;
 			bullet10_X_Pos_in = bullet10_X_Pos +bullet10_X_Motion;
 
 			if( bullet11_Y_Pos >= bullet11_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet11_edge = 1'b1;
 			end
 			bullet11_Y_Pos_in = bullet11_Y_Pos +bullet11_Y_Motion;
 			bullet11_X_Pos_in = bullet11_X_Pos +bullet11_X_Motion;
 
 			if( bullet12_Y_Pos >= bullet12_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet12_edge = 1'b1;
 			end
 			bullet12_Y_Pos_in = bullet12_Y_Pos +bullet12_Y_Motion;
 			bullet12_X_Pos_in = bullet12_X_Pos +bullet12_X_Motion;
 
 			if( bullet13_Y_Pos >= bullet13_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet13_edge = 1'b1;
 			end
 			bullet13_Y_Pos_in = bullet13_Y_Pos +bullet13_Y_Motion;
 			bullet13_X_Pos_in = bullet13_X_Pos +bullet13_X_Motion;
 
 			if( bullet14_Y_Pos >= bullet14_Y_Max )
-			begin// heart is at the right edge, BOUNCE!
+			begin// heart is at the right edge!
 				bullet14_edge = 1'b1;
 			end
 			bullet14_Y_Pos_in = bullet14_Y_Pos +bullet14_Y_Motion;
@@ -1182,7 +1182,7 @@ module  bullet2_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 144 addresses
 logic [3:0] mem [0:143];
 
 logic [23:0] col [8:0];
@@ -1205,7 +1205,7 @@ module  rand_rom
 		output logic [3:0] bullet_num
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 1024 addresses
 logic [3:0] mem [0:1023];
 
 	assign bullet_num = mem[address];

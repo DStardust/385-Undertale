@@ -6,7 +6,7 @@ module field
 		output logic [19:0] field_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-always_comb
+always_comb // display the battlefield at the specific position
 	begin
 		is_field = 1'b0;
 		field_address = 20'b0;
@@ -28,7 +28,7 @@ module  field_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [8:0];

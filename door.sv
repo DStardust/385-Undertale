@@ -65,14 +65,12 @@ module door
             //   both sides of the operator as UNSIGNED numbers.
             // e.g. door_Y_Pos - door_Size <= door_Y_Min 
             // If door_Y_Pos is 0, then door_Y_Pos - door_Size will not be -4, but rather a large positive number.
-            
-            // TODO: Add other boundary detections and handle keypress here.
-             
+				
 					case (keycode)
 						8'd07:
 						begin
 							
-							if ( door_X_Pos <= door_X_Min ) begin// door is at the left edge, BOUNCE!
+							if ( door_X_Pos <= door_X_Min ) begin// door is at the left edge!
 								door_X_Motion_in = 10'b0;
 								mark_xmin = 1'b1;
 							end
@@ -84,7 +82,7 @@ module door
 						8'd04:
 						begin
 							
-							if( door_X_Pos >= door_X_Max ) begin// door is at the right edge, BOUNCE!
+							if( door_X_Pos >= door_X_Max ) begin// door is at the right edge!
 								door_X_Motion_in = 10'b0;
 								mark_xmax = 1'b1;
 							end
@@ -134,7 +132,7 @@ module  door_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 32768 addresses
 logic [3:0] mem [0:32767];
 
 logic [23:0] col [7:0];

@@ -14,7 +14,7 @@ module flower
 logic [2:0] flower_num;
 logic [11:0] counter;
 
-always_ff @(posedge frame_clk) begin
+always_ff @(posedge frame_clk) begin // counter inside to check if the time reaches 1min and display the animation of the flower
 	if(status == 4'd5)
 	begin
 		case (counter)
@@ -55,13 +55,13 @@ always_ff @(posedge frame_clk) begin
 	end
 end
 
-always_comb
+always_comb // using flower_num to display different image of flower at the same position
 	begin
 		is_flower1 = 1'b0;
 		is_flower2 = 1'b0;
 		is_flower3 = 1'b0;
 		flower_address = 20'b0;
-		if(status == 4'd5)
+		if(status == 4'd5) // at scene 5
 		begin
 			 if (DrawX >= 279 && DrawX < 361 && DrawY >= 124 && DrawY < 210) 
 			 begin
@@ -104,7 +104,7 @@ module  flower1_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 8192 addresses
 logic [3:0] mem [0:8191];
 
 logic [23:0] col [8:0];
@@ -126,7 +126,7 @@ module  flower2_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 8192 addresses
 logic [3:0] mem [0:8191];
 
 logic [23:0] col [8:0];
@@ -148,7 +148,7 @@ module  flower3_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 8192 addresses
 logic [3:0] mem [0:8191];
 
 logic [23:0] col [8:0];

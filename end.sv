@@ -6,7 +6,7 @@ module win
 		output logic [19:0] win_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-always_comb
+always_comb // display the win at the specific position
 	begin
 		is_win = 1'b0;
 		win_address = 20'b0;
@@ -28,7 +28,7 @@ module  win_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 16384 addresses
 logic [3:0] mem [0:16383];
 
 logic [23:0] col [8:0];
@@ -54,7 +54,7 @@ module lose
 		output logic [19:0] lose_address		// address for color mapper to figure out what color the logo pixel should be
 );
 
-always_comb
+always_comb // display the lose at the specific position
 	begin
 		is_lose = 1'b0;
 		lose_address = 20'b0;
@@ -76,7 +76,7 @@ module  lose_rom
 		output logic [23:0] color_out
 );
 
-// mem has width of 3 bits and a total of 400 addresses
+// mem has width of 4 bits and a total of 16384 addresses
 logic [3:0] mem [0:16383];
 
 logic [23:0] col [8:0];

@@ -44,10 +44,6 @@ module state (input  logic Clk, Reset,
         endcase
    
 		  // Assign outputs based on ‘state’
-		  // For "Add" states, set Add logic as high.
-		  // For "Shift" states, set Shift_En logic as high.
-		  // For "Sub" states, set Sub logic as high.
-		  // For "ClearA_LoadB" states, set Reset_A and Ld_B logic as high.
         case (curr_state) 
 	   	   title: 
 	         begin

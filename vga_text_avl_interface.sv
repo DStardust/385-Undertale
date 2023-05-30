@@ -118,6 +118,7 @@ logic start_bullet, bullet_shape;
 //Declare submodules..e.g. VGA controller, ROMS, etc
 vga_controller vga_controller_instance(.Clk(CLK), .Reset(RESET), .hs(hs), .vs(vs), .pixel_clk(pixel_clk), .blank(blank), .sync(sync), .DrawX(DrawX), .DrawY(DrawY));
 
+// roms of fonts.
 font_rom font1(.addr(font_addr1), .data(font_data1));
 font_rom font2(.addr(font_addr2), .data(font_data2));
 font1_rom font1_rom(.font1_address(font_address), .font_out(font_out1));
@@ -127,21 +128,35 @@ font4_rom font4_rom(.font4_address(font_address), .font_out(font_out4));
 font5_rom font5_rom(.font5_address(font_address), .font_out(font_out5));
 font6_rom font6_rom(.font6_address(font_address), .font_out(font_out6));
 
+// display logic of title
 title title(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_title(is_title), .title_address(title_address));
+
+// rom of image of title
 title_rom title_rom(.title_address(title_address), .color_out(color_out_t));
 
+// display logic of map1
 map1 map1(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_map1(is_map1), .map1_address(map1_address));
+
+// rom of image of map1
 map1_rom map1_rom(.map1_address(map1_address), .color_out(color_out_m1));
 
+// display logic of map2
 map2 map2(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_map2(is_map2), .map2_address(map2_address));
+
+// rom of image of map2
 map2_rom map2_rom(.map2_address(map2_address), .color_out(color_out_m2));
 
+// display logic of door
 door door(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_door(is_door), .door_address(door_address));
+
+// rom of image of door
 door_rom door_rom(.door_address(door_address), .color_out(color_out_d));
 
+// motion logic for frisk at map1 and map2
 frisk_move friskmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_frisk(is_frisk), .status(status), .frisk_address(frisk_address), .arrived_door(arrived_door));
 frisk_move2 friskmove2(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_frisk(is_frisk2), .status(status), .frisk_address(frisk_address2), .arrived_monster(arrived_monster));
 
+// rom of images of different frisk on map1
 frisk1_rom frisk1_rom(.frisk1_address(frisk_address), .color_out(color_out_f1));
 frisk2_rom frisk2_rom(.frisk2_address(frisk_address), .color_out(color_out_f2));
 frisk3_rom frisk3_rom(.frisk3_address(frisk_address), .color_out(color_out_f3));
@@ -153,6 +168,7 @@ frisk8_rom frisk8_rom(.frisk8_address(frisk_address), .color_out(color_out_f8));
 frisk9_rom frisk9_rom(.frisk9_address(frisk_address), .color_out(color_out_f9));
 frisk10_rom frisk10_rom(.frisk10_address(frisk_address), .color_out(color_out_f10));
 
+// rom of images of different frisk on map2
 frisk1_rom frisk1_rom2(.frisk1_address(frisk_address2), .color_out(color_out_f12));
 frisk2_rom frisk2_rom2(.frisk2_address(frisk_address2), .color_out(color_out_f22));
 frisk3_rom frisk3_rom2(.frisk3_address(frisk_address2), .color_out(color_out_f32));
@@ -164,20 +180,32 @@ frisk8_rom frisk8_rom2(.frisk8_address(frisk_address2), .color_out(color_out_f82
 frisk9_rom frisk9_rom2(.frisk9_address(frisk_address2), .color_out(color_out_f92));
 frisk10_rom frisk10_rom2(.frisk10_address(frisk_address2), .color_out(color_out_f102));
 
+// motion logic for heart
 heart_move heartmove(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .keycode(keycode), .DrawX(DrawX), .DrawY(DrawY), .is_heart(is_heart), .PosXH(PosXH), .PosYH(PosYH), .status(status), .heart_address(heart_address));
+
+// rom of image of heart
 heart_rom heart_rom(.heart_address(heart_address), .color_out(color_out_h));
 
+// display logic of battle field
 field field(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_field(is_field), .field_address(field_address));
+
+// rom of image of battlefield
 field_rom field_rom(.field_address(field_address), .color_out(color_out_fi));
 
+// display logic of flower
 flower flower(.frame_clk(vs), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_flower1(is_flower1), .is_flower2(is_flower2), .is_flower3(is_flower3), .time_up(time_up), .start_bullet(start_bullet), .flower_address(flower_address));
+
+// rom of images of flowers
 flower1_rom flower1_rom(.flower_address(flower_address), .color_out(color_out_fl1));
 flower2_rom flower2_rom(.flower_address(flower_address), .color_out(color_out_fl2));
 flower3_rom flower3_rom(.flower_address(flower_address), .color_out(color_out_fl3));
 
+// display logic of introduction 
 intro intro(.frame_clk(vs), .DrawX(DrawX), .DrawY(DrawY), .status(status), .is_intro1(is_intro1), .is_intro2(is_intro2), .is_intro3(is_intro3), .is_intro4(is_intro4),
 .is_intro5(is_intro5), .is_intro6(is_intro6), .is_intro7(is_intro7), .is_intro8(is_intro8), .is_intro9(is_intro9), .is_intro10(is_intro10), .is_sub1(is_sub1), .is_sub2(is_sub2),
 .intro_num1(intro_num1), .intro_num2(intro_num2), .intro_address(intro_address));
+
+// rom of image of introductions
 intro1_rom intro1_rom(.intro1_address(intro_address), .color_out(color_out_i1));
 intro2_rom intro2_rom(.intro2_address(intro_address), .color_out(color_out_i2));
 intro3_rom intro3_rom(.intro3_address(intro_address), .color_out(color_out_i3));
@@ -189,14 +217,23 @@ intro8_rom intro8_rom(.intro8_address(intro_address), .color_out(color_out_i8));
 intro9_rom intro9_rom(.intro9_address(intro_address), .color_out(color_out_i9));
 intro10_rom intro10_rom(.intro10_address(intro_address), .color_out(color_out_i10));
 
+// motion logic for bullets
 bullets_move bullets_move(.Clk(CLK), .frame_clk(vs), .Reset(RESET), .counter(counter2), .DrawX(DrawX), .DrawY(DrawY), .PosXH(PosXH), .PosYH(PosYH), .HP(HP), .is_bullets(is_bullets), .start_bullet(start_bullet), .status(status), .Difficulty(Difficulty), .bullet_shape(bullet_shape), .bullets_address(bullets_address));
+
+// rom of images of bullets
 bullet1_rom bullet1_rom(.bullet1_address(bullets_address), .color_out(color_out_b1));
 bullet2_rom bullet2_rom(.bullet2_address(bullets_address), .color_out(color_out_b2));
 
+// display logic of win
 win win(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_win(is_win), .win_address(win_address));
+
+// rom of image of win
 win_rom win_rom(.win_address(win_address), .color_out(color_out_win));
 
+// display logic of lose
 lose lose(.DrawX(DrawX), .DrawY(DrawY), .status(status), .is_lose(is_lose), .lose_address(lose_address));
+
+// rom of image of lose
 lose_rom lose_rom(.lose_address(lose_address), .color_out(color_out_lose));
 
 always_comb
@@ -310,7 +347,7 @@ begin
 			counter2 ++;
 end
 
-always_comb
+always_comb // output the color of the pixel according to the is_X signals
 begin
 	if (~blank)
 	begin
